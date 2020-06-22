@@ -5,6 +5,8 @@ import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import ProgressBar from "../components/ProgressBar";
 
+
+
 class Upload extends Component {
 
   constructor(props) {
@@ -94,7 +96,7 @@ class Upload extends Component {
 
   renderProgress(file) {
     const uploadProgress = this.state.uploadProgress[file.name];
-    if (this.state.uploading || this.state.successfullUploaded) {
+    // if (this.state.uploading || this.state.successfullUploaded) {
       return (
         <div className="ProgressWrapper">
           <ProgressBar progress={uploadProgress ? uploadProgress.percentage : 0} />
@@ -109,7 +111,7 @@ class Upload extends Component {
           />
         </div>
       );
-    }
+    // }
   }
 
   renderActions() {
@@ -134,6 +136,15 @@ class Upload extends Component {
     }
   }
 
+  fileSize(b) {
+      var u = 0, s=1024;
+      while (b >= s || -b >= s) {
+          b /= s;
+          u++;
+      }
+      return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
+  }  
+
   render() {
     return (
       <div className="Upload">
@@ -148,6 +159,7 @@ class Upload extends Component {
               return (
                 <div key={file.name} className="Row">
                   <span className="Filename">{file.name}</span>
+                  <span className="Filesize">{this.fileSize(file.size)}</span>
                   {this.renderProgress(file)}
                 </div>
               );
