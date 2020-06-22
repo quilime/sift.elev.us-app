@@ -5,12 +5,13 @@
   align-items: flex-start;
   text-align: left;
   overflow: hidden;
+  margin-right:1em;
 }
 
 .Content {
   display: flex;
   flex-direction: row;
-  padding-top: 16px;
+  padding:2em;
   box-sizing: border-box;
   width: 100%;
 }
@@ -48,8 +49,8 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  height: 50px;
-  padding: 8px;
+  height: 4em;
+  padding: 0;
   overflow: hidden;
   box-sizing: border-box;
 }

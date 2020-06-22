@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
-import Progress from "../progress/Progress";
+import ProgressBar from "../components/ProgressBar";
 
 class Upload extends Component {
 
@@ -97,7 +97,7 @@ class Upload extends Component {
     if (this.state.uploading || this.state.successfullUploaded) {
       return (
         <div className="ProgressWrapper">
-          <Progress progress={uploadProgress ? uploadProgress.percentage : 0} />
+          <ProgressBar progress={uploadProgress ? uploadProgress.percentage : 0} />
           <img
             className="CheckIcon"
             alt="done"
@@ -137,15 +137,12 @@ class Upload extends Component {
   render() {
     return (
       <div className="Upload">
-        <span className="Title">Upload Files</span>
         <div className="Content">
-          <div>
-            <Dropzone
-              showUploader={this.state.showUploader}
-              onFilesAdded={this.onFilesAdded}
-              disabled={this.state.uploading || this.state.successfullUploaded}
-            />
-          </div>
+          <Dropzone
+            showUploader={this.state.showUploader}
+            onFilesAdded={this.onFilesAdded}
+            disabled={this.state.uploading || this.state.successfullUploaded}
+          />
           <div className="Files">
             {this.state.files.map(file => {
               return (
