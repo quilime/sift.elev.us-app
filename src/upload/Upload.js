@@ -114,7 +114,7 @@ class Upload extends Component {
     if (this.state.successfullUploaded) {
       return (
         <button onClick={this.resetUploader}>
-          Clear
+          Upload More Files
         </button>
       );
     } else {
