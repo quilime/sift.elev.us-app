@@ -4,9 +4,13 @@ import "./Dropzone.css";
 class Dropzone extends Component {
   constructor(props) {
     super(props);
-    this.state = { hightlight: false };
-    this.fileInputRef = React.createRef();
+    
+    this.state = { 
+      hightlight: false, 
+      visible: true 
+    };
 
+    this.fileInputRef = React.createRef();
     this.openFileDialog = this.openFileDialog.bind(this);
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
@@ -65,7 +69,7 @@ class Dropzone extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onClick={this.openFileDialog}
-        style={{ cursor: this.props.disabled ? "default" : "pointer" }}
+        style={{ cursor: this.props.disabled ? "default" : "pointer", display: this.props.showUploader ? "" : "none" }} 
       >
         <input
           ref={this.fileInputRef}

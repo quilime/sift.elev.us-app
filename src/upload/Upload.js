@@ -4,24 +4,37 @@ import "./Upload.css";
 import Progress from "../progress/Progress";
 
 class Upload extends Component {
+
   constructor(props) {
     super(props);
+  
     this.state = {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false
+      successfullUploaded: false,
+      showUploader: true
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
+    this.resetUploader = this.resetUploader.bind(this);
+  }
+
+  resetUploader() {
+    this.setState({ 
+      files: [], 
+      successfullUploaded: false,
+      showUploader: true 
+    });
   }
 
   onFilesAdded(files) {
     this.setState(prevState => ({
-      files: prevState.files.concat(files)
+      files: prevState.files.concat(files),
+      showUploader : false
     }));
   }
 
@@ -33,7 +46,6 @@ class Upload extends Component {
     });
     try {
       await Promise.all(promises);
-
       this.setState({ successfullUploaded: true, uploading: false });
     } catch (e) {
       // Not Production ready! Do some error handling here instead...
@@ -101,11 +113,7 @@ class Upload extends Component {
   renderActions() {
     if (this.state.successfullUploaded) {
       return (
-        <button
-          onClick={() =>
-            this.setState({ files: [], successfullUploaded: false })
-          }
-        >
+        <button onClick={this.resetUploader}>
           Clear
         </button>
       );
@@ -128,6 +136,7 @@ class Upload extends Component {
         <div className="Content">
           <div>
             <Dropzone
+              showUploader={this.state.showUploader}
               onFilesAdded={this.onFilesAdded}
               disabled={this.state.uploading || this.state.successfullUploaded}
             />
