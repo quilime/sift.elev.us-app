@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Button } from "antd";
+import { UploadOutlined } from '@ant-design/icons';
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Progress from "../progress/Progress";
@@ -113,18 +115,21 @@ class Upload extends Component {
   renderActions() {
     if (this.state.successfullUploaded) {
       return (
-        <button onClick={this.resetUploader}>
+        <Button 
+          type="primary" 
+          onClick={this.resetUploader}>
           Upload More Files
-        </button>
+        </Button>
       );
-    } else {
+    } else if (this.state.files.length > 0 && !this.state.uploading) {
       return (
-        <button
-          disabled={this.state.files.length < 0 || this.state.uploading}
+        <Button
+          type="primary"
+          icon={<UploadOutlined />}
           onClick={this.uploadFiles}
         >
           Upload
-        </button>
+        </Button>
       );
     }
   }

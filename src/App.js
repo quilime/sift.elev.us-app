@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
+
+import { Button } from "antd";
+import { CheckOutlined } from '@ant-design/icons';
+import "antd/dist/antd.css";
+
 import Upload from "./upload/Upload";
 
 class App extends Component {
@@ -12,19 +17,26 @@ class App extends Component {
     return (
       <div className="App">
          {this.state.uploaderActive ? (
-          <div className="Card">
-            <Upload />
-            <button 
-              className="closeUploader"
+          <div className="Uploader">
+            <div className="Card">
+              <Upload />
+            </div>                 
+            <Button
+              type="primary" 
+              icon={<CheckOutlined />}
+              className="CloseUploader"
               onClick={() => this.setState({ uploaderActive : false }) }
             >
-              CloseUploader
-            </button>   
-          </div>       
+            Done
+            </Button>
+          </div>
          ) : (
-          <button onClick={() => this.setState({ uploaderActive : true }) }>
+          <Button 
+            type="primary"
+            onClick={() => this.setState({ uploaderActive : true }) }
+          >
             Upload
-          </button>
+          </Button>        
          )}        
       </div>
     );
