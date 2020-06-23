@@ -25,12 +25,13 @@
 }
 
 .Actions {
-  display: flex;
-  flex: 1;
+  text-align:center;
   width: 100%;
-  align-items: flex-end;
-  flex-direction: column;
-  margin-top: 32px;
+  margin: 4em 0;
+}
+
+.Actions button {
+  margin:0 1em;
 }
 
 .Title {
@@ -40,6 +41,7 @@
 
 .Filename {
 }
+
 .Filesize {
   font-style:italic;
 }

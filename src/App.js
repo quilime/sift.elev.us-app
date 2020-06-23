@@ -2,7 +2,6 @@ import React from "react"; // { useState, useEffect }
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import "./App.css";
 
-
 import "antd/dist/antd.css";
 import Upload from "./upload/Upload";
 import Banner from "./components/Banner";

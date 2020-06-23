@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import ProgressBar from "../components/ProgressBar";
@@ -114,6 +114,15 @@ class Upload extends Component {
     // }
   }
 
+  fileSize(b) {
+      var u = 0, s=1024;
+      while (b >= s || -b >= s) {
+          b /= s;
+          u++;
+      }
+      return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
+  }   
+
   renderActions() {
     if (this.state.successfullUploaded) {
       return (
@@ -126,6 +135,7 @@ class Upload extends Component {
     } else if (this.state.files.length > 0 && !this.state.uploading) {
       return (
         <Button
+          className="UploadButton"
           type="primary"
           icon={<UploadOutlined />}
           onClick={this.uploadFiles}
@@ -134,16 +144,7 @@ class Upload extends Component {
         </Button>
       );
     }
-  }
-
-  fileSize(b) {
-      var u = 0, s=1024;
-      while (b >= s || -b >= s) {
-          b /= s;
-          u++;
-      }
-      return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
-  }  
+  } 
 
   render() {
     return (
@@ -166,7 +167,26 @@ class Upload extends Component {
             })}
           </div>
         </div>
-        <div className="Actions">{this.renderActions()}</div>
+        <div className="Actions">
+          { this.state.files.length > 0 ? 
+            <Button 
+              type="normal" 
+              icon={<CloseCircleOutlined />}
+              onClick={this.resetUploader}
+            >
+            Cancel
+            </Button> : null }
+          { (this.state.files.length > 0) ? 
+            <Button
+              className="UploadButton"
+              type="primary"
+              disabled={this.state.successfullUploaded || this.state.uploading}
+              icon={<UploadOutlined />}
+              onClick={this.uploadFiles}
+            >
+            Upload
+            </Button> : null }
+        </div>
       </div>
     );
   }
