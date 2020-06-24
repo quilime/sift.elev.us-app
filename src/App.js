@@ -1,9 +1,8 @@
 import React from "react"; // { useState, useEffect }
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import "./App.css";
-
 import "antd/dist/antd.css";
-import Upload from "./upload/Upload";
+
+import Upload from "./components/Upload";
 import Banner from "./components/Banner";
 
 function App() {
@@ -12,6 +11,7 @@ function App() {
       <Banner/>
       <Switch>
         <Route exact path="/"/>
+        <Route exact path="/sift"/>
         <Route exact path="/upload" render={(props) => (
           <Upload />
         )} />

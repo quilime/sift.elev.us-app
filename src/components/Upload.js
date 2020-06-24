@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { UploadOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import Dropzone from "../dropzone/Dropzone";
-import "./Upload.css";
-import ProgressBar from "../components/ProgressBar";
+import { UploadOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import styled from "styled-components";
 
+import Dropzone from "./Dropzone";
+import ProgressBar from "./ProgressBar";
 
 
 class Upload extends Component {
@@ -95,10 +95,18 @@ class Upload extends Component {
   }
 
   renderProgress(file) {
+
+    const ProgressWrapper = styled.div `
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+    `;
+
     const uploadProgress = this.state.uploadProgress[file.name];
     // if (this.state.uploading || this.state.successfullUploaded) {
       return (
-        <div className="ProgressWrapper">
+        <ProgressWrapper>
           <ProgressBar progress={uploadProgress ? uploadProgress.percentage : 0} />
           <img
             className="CheckIcon"
@@ -109,7 +117,7 @@ class Upload extends Component {
                 uploadProgress && uploadProgress.state === "done" ? 0.5 : 0
             }}
           />
-        </div>
+        </ProgressWrapper>
       );
     // }
   }
@@ -128,7 +136,8 @@ class Upload extends Component {
       return (
         <Button 
           type="primary" 
-          onClick={this.resetUploader}>
+          onClick={this.resetUploader}
+        >
           Upload More Files
         </Button>
       );
@@ -146,48 +155,98 @@ class Upload extends Component {
     }
   } 
 
+
+
   render() {
+
+    const Upload = styled.div `
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      align-items: flex-start;
+      text-align: left;
+      overflow: hidden;
+      margin-right:1em;
+    `;
+
+    const Content = styled.div `
+      display: flex;
+      flex-direction: row;
+      padding:2em;
+      box-sizing: border-box;
+      width: 100%;
+    `;
+
+    const Actions = styled.div `
+      text-align:center;
+      width: 100%;
+      margin: 4em 0;
+      & button {
+        margin:0 1em;
+      }
+    `; 
+
+    const Files = styled.div `
+      margin-left: 32px;
+      align-items: flex-start;
+      justify-items: flex-start;
+      flex: 1;
+      overflow-y: auto;
+    `;
+
+    const Row = styled.div `
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+    `;
+
+    var st = this.state.files.length > 0 && (!this.state.successfullUploaded || this.state.uploading);
+
     return (
-      <div className="Upload">
-        <div className="Content">
+      <Upload>
+        <Content>
           <Dropzone
             showUploader={this.state.showUploader}
             onFilesAdded={this.onFilesAdded}
             disabled={this.state.uploading || this.state.successfullUploaded}
           />
-          <div className="Files">
+          <Files>
             {this.state.files.map(file => {
               return (
-                <div key={file.name} className="Row">
-                  <span className="Filename">{file.name}</span>
-                  <span className="Filesize">{this.fileSize(file.size)}</span>
+                <Row key={file.name}>
+                  {file.name}
+                  <em>{this.fileSize(file.size)}</em>
                   {this.renderProgress(file)}
-                </div>
+                </Row>
               );
             })}
-          </div>
-        </div>
-        <div className="Actions">
-          { this.state.files.length > 0 ? 
-            <Button 
-              type="normal" 
-              icon={<CloseCircleOutlined />}
-              onClick={this.resetUploader}
-            >
-            Cancel
-            </Button> : null }
-          { (this.state.files.length > 0) ? 
-            <Button
-              className="UploadButton"
-              type="primary"
-              disabled={this.state.successfullUploaded || this.state.uploading}
-              icon={<UploadOutlined />}
-              onClick={this.uploadFiles}
-            >
-            Upload
-            </Button> : null }
-        </div>
-      </div>
+          </Files>
+        </Content>
+        <Actions
+          style={{ "display" :  this.state.successfullUploaded || this.state.files.length > 0 ? "" : "none"  }}
+          >
+          <Button 
+            type="normal" 
+            icon={st ? <CloseCircleOutlined /> : <CheckCircleOutlined />}
+            onClick={this.resetUploader}
+          >
+          { st ? "Cancel" : "OK" }
+          </Button>
+          <Button
+            className="UploadButton"
+            type="primary"
+            disabled={this.state.successfullUploaded || this.state.uploading}
+            icon={<UploadOutlined />}
+            onClick={this.uploadFiles}
+          >
+          Upload
+          </Button>
+        </Actions>
+      </Upload>
     );
   }
 }

@@ -4,10 +4,9 @@ import { NavLink, withRouter } from "react-router-dom";
 
 const Wrapper = styled.div `
   display: flex;
-  align-items: center;
   padding: 0 40px;
   margin-bottom: 40px;
-  background: #ddd;
+  background: #333;
   height:3em;
 `;
 const Flex = styled.div `
@@ -18,21 +17,34 @@ const Flex = styled.div `
     display: flex;
     height:3em;
     align-items: center;
+    align-self: flex-end;
     font-weight:bold;
     &:hover {
-      background: #eee;
+      background: #aaa;
     }
     &.active {
-      background: #eee;
+      background: #fff;
     }
+    &.upload {
+      margin-left: auto;
+    }    
+  }
+  .T {
+    font-weight:bold;
   }
 `;
 
 const Banner = ({ setModalEvent }) => (
   <Wrapper>
     <Flex>
-      <NavLink to={`/`} exact>Sift</NavLink>
-      <NavLink to={`/upload`}>Upload</NavLink>
+      <NavLink className="T" to={`/`} exact>Aggregate</NavLink>
+      <NavLink to={`/sift`} exact>Sift</NavLink>
+      <NavLink 
+        className="upload"
+        to={`/upload`}
+      >
+        Upload
+      </NavLink>
     </Flex>
   </Wrapper>
 );

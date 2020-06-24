@@ -8,17 +8,19 @@ const ProgressBarContainer = styled.div `
   border-radius: 5px;
 `;
 const Progress = styled.div `
-  background-color: rgb(140, 140, 229);
+  background-color: #000;
   height: 100%;
   margin: 0;
   border-radius: 5px;
 `;
 
 class ProgressBar extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {};
   }
+  
   render() {
     return (
       <ProgressBarContainer>

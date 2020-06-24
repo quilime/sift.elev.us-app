@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import "./Dropzone.css";
+import { CheckCircleOutlined } from '@ant-design/icons';
+import styled from "styled-components";
 
 class Dropzone extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class Dropzone extends Component {
   }
 
   onDragLeave(event) {
-    this.setState({ hightlight: false });
+    // this.setState({ hightlight: false });
   }
 
   onDrop(event) {
@@ -59,17 +60,21 @@ class Dropzone extends Component {
       array.push(list.item(i));
     }
     return array;
-  }
+  }  
 
   render() {
+
     return (
-      <div
-        className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
+      <DropzoneElem
         onDragOver={this.onDragOver}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onClick={this.openFileDialog}
-        style={{ cursor: this.props.disabled ? "default" : "pointer", display: this.props.showUploader ? "" : "none" }} 
+        style={{ 
+          cursor : this.props.disabled ? "default" : "pointer", 
+          display : this.props.showUploader ? "" : "none",
+          backgroundColor : this.state.hightlight ? "rgb(180, 180, 180)" : ""
+        }} 
       >
         <input
           ref={this.fileInputRef}
@@ -77,16 +82,45 @@ class Dropzone extends Component {
           type="file"
           multiple
           onChange={this.onFilesAdded}
+          style={{ display: "none" }}
         />
         <img
           alt="upload"
-          className="Icon"
+          style={{
+            opacity : "0.3",
+            height : "64px",
+            width : "64px",
+            margin : "0 auto",
+            display : "block",
+            marginTop : "10%"
+          }}
           src="baseline-cloud_upload-24px.svg"
         />
-        <span className="Title">Drag files here or click to upload files</span>
-      </div>
+        <Title>
+          Drag files here or click to upload files
+        </Title>
+      </DropzoneElem>
     );
-  }
+  }  
 }
+
+const Title = styled.div `
+  display:block;
+  text-align:center;
+  font-weight:bold;
+`;
+
+const DropzoneElem = styled.div `
+  position:absolute;
+  top:3em;
+  left:0;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+  height: calc(100% - 3em);
+  height: -moz-calc(100% - 3em);
+  height: -webkit-calc(100% - 3em);
+  height: -o-calc(100% - 3em);      
+`;
 
 export default Dropzone;
