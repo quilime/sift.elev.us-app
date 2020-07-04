@@ -89,7 +89,10 @@ class Upload extends Component {
       const formData = new FormData();
       formData.append("file", file, file.name);
 
-      req.open("POST", "http://localhost:8000/upload");
+      const server = process.env.NODE_ENV === 'development' ? 
+        'http://localhost:8000/upload' : 'https://img.elev.us/upload';
+
+      req.open("POST", server);
       req.send(formData);
     });
   }

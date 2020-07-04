@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.3.5",
     "react": "^16.13.1",
+    "react-document-title": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish": "react-scripts build; rsync -var ./build/ sift@elev.us:sift.elev.us/public/"
   },
   "eslintConfig": {
     "extends": "react-app"
