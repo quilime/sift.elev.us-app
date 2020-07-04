@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish": "react-scripts build; rsync -var ./build/ sift@elev.us:sift.elev.us/public/ --delete"
+    "publish": "react-scripts build; ./publish.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
