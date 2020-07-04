@@ -25,26 +25,14 @@ const Flex = styled.div `
     &.active {
       background: #fff;
     }
-    &.upload {
-      margin-left: auto;
-    }    
-  }
-  .T {
-    font-weight:bold;
   }
 `;
 
 const Banner = ({ setModalEvent }) => (
   <Wrapper>
     <Flex>
-      <NavLink className="T" to={`/`} exact>Aggregate</NavLink>
-      <NavLink to={`/sift`} exact>Sift</NavLink>
-      <NavLink 
-        className="upload"
-        to={`/upload`}
-      >
-        Upload
-      </NavLink>
+      <NavLink to={`/`} exact>Aggregate</NavLink>
+      <NavLink to={`/upload`} exact>Upload</NavLink>
     </Flex>
   </Wrapper>
 );

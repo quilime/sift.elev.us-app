@@ -64,6 +64,25 @@ class Dropzone extends Component {
 
   render() {
 
+    const Title = styled.div `
+      display:block;
+      text-align:center;
+      font-weight:bold;
+    `;
+
+    const DropzoneElem = styled.div `
+      position:absolute;
+      top:3em;
+      left:0;
+      align-items: center;
+      justify-content: center;
+      width:100%;
+      height: calc(100% - 3em);
+      height: -moz-calc(100% - 3em);
+      height: -webkit-calc(100% - 3em);
+      height: -o-calc(100% - 3em);      
+    `;    
+
     return (
       <DropzoneElem
         onDragOver={this.onDragOver}
@@ -97,30 +116,13 @@ class Dropzone extends Component {
           src="baseline-cloud_upload-24px.svg"
         />
         <Title>
-          Drag files here or click to upload files
+          Drop .jpg or .png Images Here
         </Title>
       </DropzoneElem>
     );
   }  
 }
 
-const Title = styled.div `
-  display:block;
-  text-align:center;
-  font-weight:bold;
-`;
 
-const DropzoneElem = styled.div `
-  position:absolute;
-  top:3em;
-  left:0;
-  align-items: center;
-  justify-content: center;
-  width:100%;
-  height: calc(100% - 3em);
-  height: -moz-calc(100% - 3em);
-  height: -webkit-calc(100% - 3em);
-  height: -o-calc(100% - 3em);      
-`;
 
 export default Dropzone;

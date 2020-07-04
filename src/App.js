@@ -11,7 +11,6 @@ function App() {
       <Banner/>
       <Switch>
         <Route exact path="/"/>
-        <Route exact path="/sift"/>
         <Route exact path="/upload" render={(props) => (
           <Upload />
         )} />
