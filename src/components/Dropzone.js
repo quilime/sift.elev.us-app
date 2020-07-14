@@ -1,6 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+const Title = styled.div `
+  display:block;
+  text-align:center;
+  font-weight:bold;
+`;
+
+const DropzoneElem = styled.div `
+  position:absolute;
+  top:0;
+  background:#ddd;
+  left:120px;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+  width: calc(100% - 150px);
+  width: -moz-calc(100% - 150px);
+  width: -webkit-calc(100% - 150px);
+  width: -o-calc(100% - 150px);      
+`;    
+
 class Dropzone extends Component {
   constructor(props) {
     super(props);
@@ -96,7 +116,7 @@ class Dropzone extends Component {
           src="baseline-cloud_upload-24px.svg"
         />
         <Title>
-          Drop .jpg or .png Images Here
+          Upload jpg, png, or gifs
         </Title>
       </DropzoneElem>
     );
@@ -104,24 +124,7 @@ class Dropzone extends Component {
 }
 
 
-const Title = styled.div `
-  display:block;
-  text-align:center;
-  font-weight:bold;
-`;
 
-const DropzoneElem = styled.div `
-  position:absolute;
-  top:3em;
-  left:0;
-  align-items: center;
-  justify-content: center;
-  width:100%;
-  height: calc(100% - 3em);
-  height: -moz-calc(100% - 3em);
-  height: -webkit-calc(100% - 3em);
-  height: -o-calc(100% - 3em);      
-`;    
 
 
 

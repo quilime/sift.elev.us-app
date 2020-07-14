@@ -6,6 +6,57 @@ import styled from "styled-components";
 import Dropzone from "./Dropzone";
 import ProgressBar from "./ProgressBar";
 
+const ProgressWrapper = styled.div `
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const UploadDiv = styled.div `
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
+  text-align: left;
+  overflow: hidden;
+  margin-right:1em;
+`;
+
+const Content = styled.div `
+  display: flex;
+  flex-direction: row;
+  padding:2em;
+  box-sizing: border-box;
+  width: 100%;
+`;
+
+const Actions = styled.div `
+  text-align:center;
+  width: 100%;
+  margin: 4em 0;
+  & button {
+    margin:0 1em;
+  }
+`; 
+
+const Files = styled.div `
+  margin-left: 32px;
+  align-items: flex-start;
+  justify-items: flex-start;
+  flex: 1;
+  overflow-y: auto;
+`;
+
+const Row = styled.div `
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+`;
 
 class Upload extends Component {
 
@@ -99,13 +150,6 @@ class Upload extends Component {
 
   renderProgress(file) {
 
-    const ProgressWrapper = styled.div `
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-      align-items: center;
-    `;
-
     const uploadProgress = this.state.uploadProgress[file.name];
     // if (this.state.uploading || this.state.successfullUploaded) {
       return (
@@ -162,55 +206,10 @@ class Upload extends Component {
 
   render() {
 
-    const Upload = styled.div `
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      align-items: flex-start;
-      text-align: left;
-      overflow: hidden;
-      margin-right:1em;
-    `;
-
-    const Content = styled.div `
-      display: flex;
-      flex-direction: row;
-      padding:2em;
-      box-sizing: border-box;
-      width: 100%;
-    `;
-
-    const Actions = styled.div `
-      text-align:center;
-      width: 100%;
-      margin: 4em 0;
-      & button {
-        margin:0 1em;
-      }
-    `; 
-
-    const Files = styled.div `
-      margin-left: 32px;
-      align-items: flex-start;
-      justify-items: flex-start;
-      flex: 1;
-      overflow-y: auto;
-    `;
-
-    const Row = styled.div `
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 0;
-      overflow: hidden;
-      box-sizing: border-box;
-    `;
-
     var st = this.state.files.length > 0 && (!this.state.successfullUploaded || this.state.uploading);
 
     return (
-      <Upload>
+      <UploadDiv>
         <Content>
           <Dropzone
             showUploader={this.state.showUploader}
@@ -249,7 +248,7 @@ class Upload extends Component {
           Upload
           </Button>
         </Actions>
-      </Upload>
+      </UploadDiv>
     );
   }
 }
