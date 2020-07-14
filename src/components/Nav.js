@@ -7,8 +7,11 @@ const Wrapper = styled.div `
   position: absolute;
   top: 0;
   left: 0;
-  width:120px;
-  height:100%;
+  width:150px;
+  z-index:1000;
+  background:#fff;
+  padding:0.5em;
+  padding-bottom:1em;
   
   a { 
     color:#000;

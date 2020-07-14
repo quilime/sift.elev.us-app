@@ -10,15 +10,12 @@ const Title = styled.div `
 const DropzoneElem = styled.div `
   position:absolute;
   top:0;
+  left:0;
   background:#ddd;
-  left:120px;
   align-items: center;
   justify-content: center;
   height:100%;
-  width: calc(100% - 150px);
-  width: -moz-calc(100% - 150px);
-  width: -webkit-calc(100% - 150px);
-  width: -o-calc(100% - 150px);      
+  width:100%;
 `;    
 
 class Dropzone extends Component {
