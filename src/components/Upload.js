@@ -94,25 +94,43 @@ class Upload extends Component {
   }
 
   async uploadFiles() {
-    this.setState({ uploadProgress: {}, uploading: true });
+    
+    this.setState({ 
+      uploadProgress: {}, 
+      uploading: true 
+    });
+
     const promises = [];
+
     this.state.files.forEach(file => {
       promises.push(this.sendRequest(file));
     });
+
     try {
-      await Promise.all(promises);
-      this.setState({ successfullUploaded: true, uploading: false });
+      await Promise.all(promises)
+        .then(function(f) {
+          console.log(f, 'done w promise');
+        });
+      this.setState({ 
+        successfullUploaded: true, 
+        uploading: false 
+      });
     } catch (e) {
+
       // Not Production ready! Do some error handling here instead...
-      this.setState({ successfullUploaded: true, uploading: false });
+      this.setState({ 
+        successfullUploaded: true, 
+        uploading: false 
+      });
     }
   }
 
   sendRequest(file) {
     return new Promise((resolve, reject) => {
-      const req = new XMLHttpRequest();
 
-      req.upload.addEventListener("progress", event => {
+      const xhr = new XMLHttpRequest();
+
+      xhr.upload.addEventListener("progress", event => {
         if (event.lengthComputable) {
           const copy = { ...this.state.uploadProgress };
           copy[file.name] = {
@@ -123,18 +141,28 @@ class Upload extends Component {
         }
       });
 
-      req.upload.addEventListener("load", event => {
+      xhr.upload.addEventListener("load", event => {
         const copy = { ...this.state.uploadProgress };
         copy[file.name] = { state: "done", percentage: 100 };
         this.setState({ uploadProgress: copy });
-        resolve(req.response);
       });
 
-      req.upload.addEventListener("error", event => {
+      xhr.onreadystatechange = function() {
+        // complete
+        if (xhr.readyState === 4) {
+          resolve(xhr.response);
+        }
+      }      
+
+      xhr.upload.addEventListener("error", event => {
         const copy = { ...this.state.uploadProgress };
         copy[file.name] = { state: "error", percentage: 0 };
         this.setState({ uploadProgress: copy });
-        reject(req.response);
+        reject(xhr.response);
+      });
+
+      xhr.upload.addEventListener("onload", event => {
+        console.log("onload event");
       });
 
       const formData = new FormData();
@@ -143,8 +171,10 @@ class Upload extends Component {
       const server = process.env.NODE_ENV === 'development' ? 
         'http://localhost:8000/upload' : 'https://img.elev.us/upload';
 
-      req.open("POST", server);
-      req.send(formData);
+      xhr.open("POST", server);
+      xhr.responseType = 'json';
+      xhr.send(formData);
+
     });
   }
 
