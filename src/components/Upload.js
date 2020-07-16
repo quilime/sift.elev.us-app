@@ -6,6 +6,8 @@ import styled from "styled-components";
 import Dropzone from "./Dropzone";
 import ProgressBar from "./ProgressBar";
 
+import './Upload.css';
+
 const ProgressWrapper = styled.div `
   display: flex;
   flex: 1;
@@ -13,50 +15,7 @@ const ProgressWrapper = styled.div `
   align-items: center;
 `;
 
-const UploadDiv = styled.div `
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: flex-start;
-  text-align: left;
-  overflow: hidden;
-  margin-right:1em;
-`;
 
-const Content = styled.div `
-  display: flex;
-  flex-direction: row;
-  padding:2em;
-  box-sizing: border-box;
-  width: 100%;
-`;
-
-const Actions = styled.div `
-  text-align:center;
-  width: 100%;
-  margin: 4em 0;
-  & button {
-    margin:0 1em;
-  }
-`; 
-
-const Files = styled.div `
-  margin-left: 32px;
-  align-items: flex-start;
-  justify-items: flex-start;
-  flex: 1;
-  overflow-y: auto;
-`;
-
-const Row = styled.div `
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0;
-  overflow: hidden;
-  box-sizing: border-box;
-`;
 
 class Upload extends Component {
 
@@ -107,13 +66,16 @@ class Upload extends Component {
     });
 
     try {
+      let uploadedFiles
       await Promise.all(promises)
-        .then(function(f) {
-          console.log(f, 'done w promise');
+        .then(function(uFiles) {
+          console.log(uFiles, 'done w promise');
+          uploadedFiles = uFiles;
         });
       this.setState({ 
         successfullUploaded: true, 
-        uploading: false 
+        uploading: false, 
+        files: uploadedFiles
       });
     } catch (e) {
 
@@ -238,27 +200,50 @@ class Upload extends Component {
 
     var st = this.state.files.length > 0 && (!this.state.successfullUploaded || this.state.uploading);
 
+    const fileRows = this.state.files.map(file => {
+      
+      let href = ""
+
+      if (file) {
+        href = file.href;
+      }
+
+      return (
+        <div className="row" key={file.name}>
+          
+          {!this.state.successfullUploaded && (
+            <div>
+              {file.name}, <em>{this.fileSize(file.size)}</em>
+              <br />
+              {this.renderProgress(file)}
+            </div>
+          )}
+          
+          {this.state.successfullUploaded && (
+            <div>
+                <img className="uploadedImg" src={href} /><br />
+                <a href={href}>{file.uniqueFilename}</a>, <em>{this.fileSize(file.size)}</em>
+            </div>
+          )}
+
+        </div>
+      );
+    });
+
     return (
-      <UploadDiv>
-        <Content>
+      <div className="upload">
+        <div className="content">
           <Dropzone
             showUploader={this.state.showUploader}
             onFilesAdded={this.onFilesAdded}
             disabled={this.state.uploading || this.state.successfullUploaded}
           />
-          <Files>
-            {this.state.files.map(file => {
-              return (
-                <Row key={file.name}>
-                  {file.name}
-                  <em>{this.fileSize(file.size)}</em>
-                  {this.renderProgress(file)}
-                </Row>
-              );
-            })}
-          </Files>
-        </Content>
-        <Actions
+          <div className="files">
+            {fileRows}
+          </div>
+        </div>
+        <div
+          className="actions"
           style={{ "display" :  this.state.successfullUploaded || this.state.files.length > 0 ? "" : "none"  }}
           >
           <Button 
@@ -277,8 +262,8 @@ class Upload extends Component {
           >
           Upload
           </Button>
-        </Actions>
-      </UploadDiv>
+        </div>
+      </div>
     );
   }
 }
