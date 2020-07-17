@@ -210,6 +210,8 @@ class Upload extends Component {
           />
           <div className="files">
             {this.state.files.map(file => {
+
+              console.log(file);
       
               let href = ['http://localhost:3000/static', file.href, file.localName].join('/');
 
@@ -227,8 +229,7 @@ class Upload extends Component {
                 {file && this.state.uploadComplete && (
                   <div className="uploadedImgDiv">
                       <img alt={file.localName} src={href} /><br />
-                      <a href={href}>{file.localName}</a><br />
-                      <em>{file.dims.type}, {file.dims.width} x {file.dims.height}, {this.fileSize(file.size)}</em>
+                      <em>{file.type}, {file.dims.width}x{file.dims.height}, {this.fileSize(file.size)}</em>
                   </div>
                 )}
 
