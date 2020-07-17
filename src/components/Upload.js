@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { UploadOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { UploadOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import styled from "styled-components";
 
 import Dropzone from "./Dropzone";
@@ -26,7 +26,7 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false,
+      uploadComplete: false,
       showUploader: true
     };
 
@@ -40,7 +40,7 @@ class Upload extends Component {
   resetUploader() {
     this.setState({ 
       files: [], 
-      successfullUploaded: false,
+      uploadComplete: false,
       showUploader: true 
     });
   }
@@ -66,14 +66,14 @@ class Upload extends Component {
     });
 
     try {
-      let uploadedFiles
+      let uploadedFiles;
       await Promise.all(promises)
-        .then(function(uFiles) {
-          console.log(uFiles, 'done w promise');
-          uploadedFiles = uFiles;
+        .then(function(_uploadedFiles) {
+          console.log('uploadedFiles', _uploadedFiles);
+          uploadedFiles = _uploadedFiles;
         });
       this.setState({ 
-        successfullUploaded: true, 
+        uploadComplete: true, 
         uploading: false, 
         files: uploadedFiles
       });
@@ -81,7 +81,7 @@ class Upload extends Component {
 
       // Not Production ready! Do some error handling here instead...
       this.setState({ 
-        successfullUploaded: true, 
+        uploadComplete: true, 
         uploading: false 
       });
     }
@@ -143,7 +143,7 @@ class Upload extends Component {
   renderProgress(file) {
 
     const uploadProgress = this.state.uploadProgress[file.name];
-    // if (this.state.uploading || this.state.successfullUploaded) {
+    // if (this.state.uploading || this.state.uploadComplete) {
       return (
         <ProgressWrapper>
           <ProgressBar progress={uploadProgress ? uploadProgress.percentage : 0} />
@@ -171,7 +171,7 @@ class Upload extends Component {
   }   
 
   renderActions() {
-    if (this.state.successfullUploaded) {
+    if (this.state.uploadComplete) {
       return (
         <Button 
           type="primary" 
@@ -194,24 +194,18 @@ class Upload extends Component {
     }
   } 
 
-
+  
 
   render() {
 
-    var st = this.state.files.length > 0 && (!this.state.successfullUploaded || this.state.uploading);
+    var st = this.state.files.length > 0 && (!this.state.uploadComplete || this.state.uploading);
 
     const fileRows = this.state.files.map(file => {
       
-      let href = ""
-
-      if (file) {
-        href = file.href;
-      }
-
       return (
         <div className="row" key={file.name}>
           
-          {!this.state.successfullUploaded && (
+          {!this.state.uploadComplete && (
             <div>
               {file.name}, <em>{this.fileSize(file.size)}</em>
               <br />
@@ -219,10 +213,10 @@ class Upload extends Component {
             </div>
           )}
           
-          {this.state.successfullUploaded && (
-            <div>
-                <img className="uploadedImg" src={href} /><br />
-                <a href={href}>{file.uniqueFilename}</a>, <em>{this.fileSize(file.size)}</em>
+          {file && this.state.uploadComplete && (
+            <div className="uploadedImgDiv">
+                <img alt={file.uniqueFilename} src={file.href} /><br />
+                <a href={file.href}>{file.uniqueFilename}</a>, <em>{this.fileSize(file.size)}</em>
             </div>
           )}
 
@@ -246,22 +240,29 @@ class Upload extends Component {
           className="actions"
           style={{ "display" :  this.state.successfullUploaded || this.state.files.length > 0 ? "" : "none"  }}
           >
-          <Button 
-            type="normal" 
-            icon={st ? <CloseCircleOutlined /> : <CheckCircleOutlined />}
-            onClick={this.resetUploader}
-          >
-          { st ? "Cancel" : "OK" }
-          </Button>
-          <Button
-            className="UploadButton"
-            type="primary"
-            disabled={this.state.successfullUploaded || this.state.uploading}
-            icon={<UploadOutlined />}
-            onClick={this.uploadFiles}
-          >
-          Upload
-          </Button>
+
+          {!st && (
+            <Button 
+              type="normal" 
+              icon={<CheckCircleOutlined />}
+              onClick={this.resetUploader}
+            >
+            Upload More Files
+            </Button>
+          )}
+
+          {!this.state.successfullUploaded && !this.state.uploading && ( 
+            <Button
+              className="UploadButton"
+              type="primary"
+              icon={<UploadOutlined />}
+              onClick={this.uploadFiles}
+            >
+            Upload
+            </Button>
+          )}
+
+
         </div>
       </div>
     );
