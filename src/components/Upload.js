@@ -200,30 +200,6 @@ class Upload extends Component {
 
     var st = this.state.files.length > 0 && (!this.state.uploadComplete || this.state.uploading);
 
-    const fileRows = this.state.files.map(file => {
-      
-      return (
-        <div className="row" key={file.name}>
-          
-          {!this.state.uploadComplete && (
-            <div>
-              {file.name}, <em>{this.fileSize(file.size)}</em>
-              <br />
-              {this.renderProgress(file)}
-            </div>
-          )}
-          
-          {file && this.state.uploadComplete && (
-            <div className="uploadedImgDiv">
-                <img alt={file.uniqueFilename} src={file.href} /><br />
-                <a href={file.href}>{file.uniqueFilename}</a>, <em>{this.fileSize(file.size)}</em>
-            </div>
-          )}
-
-        </div>
-      );
-    });
-
     return (
       <div className="upload">
         <div className="content">
@@ -233,7 +209,32 @@ class Upload extends Component {
             disabled={this.state.uploading || this.state.successfullUploaded}
           />
           <div className="files">
-            {fileRows}
+            {this.state.files.map(file => {
+      
+              let href = ['http://localhost:3000/static', file.href, file.localName].join('/');
+
+              return (
+              <div className="row" key={file.name}>
+                
+                {!this.state.uploadComplete && (
+                  <div>
+                    {file.name}, <em>{this.fileSize(file.size)}</em>
+                    <br />
+                    {this.renderProgress(file)}
+                  </div>
+                )}
+                
+                {file && this.state.uploadComplete && (
+                  <div className="uploadedImgDiv">
+                      <img alt={file.localName} src={href} /><br />
+                      <a href={href}>{file.localName}</a><br />
+                      <em>{file.dims.type}, {file.dims.width} x {file.dims.height}, {this.fileSize(file.size)}</em>
+                  </div>
+                )}
+
+              </div>
+              );
+            })}
           </div>
         </div>
         <div
