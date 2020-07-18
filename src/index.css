@@ -27,6 +27,36 @@ a {
   }
 
   &.active {
-    border-bottom: 3px solid #000;
+    border-bottom: 3px solid #000 !important;
   }
 }  
+
+#nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:150px;
+  z-index:1000;
+  background:#fff;
+  padding:0.5em;
+  padding-bottom:1em;
+}
+
+#nav a { 
+  color:#000;
+  display: block;
+  margin:1em;
+  padding:0.25em;
+  font-weight:bold;
+  border-bottom: 3px solid #ddd;
+}  
+
+#nav a:hover {
+  border-bottom: 3px solid #aaa;
+}
+
+#nav a.active {
+  border-bottom: 3px solid #000 !important;
+}
+
+

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { UploadOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import styled from "styled-components";
 
 import Dropzone from "./Dropzone";
@@ -206,7 +206,7 @@ class Upload extends Component {
           <Dropzone
             showUploader={this.state.showUploader}
             onFilesAdded={this.onFilesAdded}
-            disabled={this.state.uploading || this.state.successfullUploaded}
+            disabled={this.state.uploading || this.state.uploadComplete}
           />
           <div className="files">
             {this.state.files.map(file => {
@@ -240,20 +240,20 @@ class Upload extends Component {
         </div>
         <div
           className="actions"
-          style={{ "display" :  this.state.successfullUploaded || this.state.files.length > 0 ? "" : "none"  }}
+          style={{ "display" :  this.state.uploadComplete || this.state.files.length > 0 ? "" : "none"  }}
           >
 
           {!st && (
             <Button 
               type="normal" 
-              icon={<CheckCircleOutlined />}
+              icon={<UploadOutlined />}
               onClick={this.resetUploader}
             >
             Upload More Files
             </Button>
           )}
 
-          {!this.state.successfullUploaded && !this.state.uploading && ( 
+          {!this.state.uploadComplete && !this.state.uploading && ( 
             <Button
               className="UploadButton"
               type="primary"

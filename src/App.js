@@ -1,29 +1,53 @@
-import React from "react"; // { useState, useEffect }
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react'; // , { useEffect, useState }
+import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
+// import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import "antd/dist/antd.css";
 
 import Upload from "./components/Upload";
-import Nav from "./components/Nav";
+import Auth from "./components/Auth";
 
 const Site = styled.div `
   padding-left:120px;
   height:100%;
 `;
 
+// const store = createStore(rootReducer);
+
 function App() {
+
+  // const [loggedIn, setLoggedIn] = useState(false);
+
+   // useEffect(() => {
+
+   //    // axios.get('/checkAuthentication')
+   //    //   .then(res => {
+   //    //     setLoggedIn(res.data.authenticated);
+   //    //   })
+   //    //   .catch((error) => {
+   //    //     setLoggedIn(false)
+   //    // });
+   //  }, []);  
+ 
   return (
-      <Router>
-        <Nav/>
-        <Site>
-          <Switch>
-            <Route exact path="/" />
-            <Route exact path="/upload" render={(props) => (
-              <Upload />
-            )} />
-          </Switch>
-        </Site>
+    <Router>
+      <div id="nav">
+        <NavLink to={`/`} exact>Aggregate</NavLink>
+        <NavLink to={`/upload`} exact>Upload</NavLink>
+        <NavLink to={`/login`} exact>Login</NavLink>
+      </div>
+      <Site>
+        <Switch>
+          <Route exact path="/" />
+          <Route exact path="/upload" render={(props) => (
+            <Upload />
+          )}/>
+          <Route exact path="/login" render={(props) => (
+            <Auth />
+          )} />
+        </Switch>
+      </Site>
     </Router>
   );
 }
