@@ -13,7 +13,6 @@ const Site = styled.div `
   height:100%;
 `;
 
-// const store = createStore(rootReducer);
 
 function App() {
 

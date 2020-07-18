@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 import styled from "styled-components";
@@ -14,8 +15,6 @@ const ProgressWrapper = styled.div `
   flex-direction: row;
   align-items: center;
 `;
-
-
 
 class Upload extends Component {
 

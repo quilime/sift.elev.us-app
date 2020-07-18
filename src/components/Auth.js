@@ -1,20 +1,32 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
 // import { UploadOutlined } from '@ant-design/icons';
 
 import './Auth.css' 
 
-const host = 'http://localhost:8000';
+const API_HOST = 'http://localhost:8000';
 
 const Auth = (props) => {
 
   const [view, setView] = useState(props.view);
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState();  
+
+  const loggedIn = useSelector(state => state.reducers.loggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetch(API_HOST + '/login/check')
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        dispatch({ type: 'SET_LOGGED_IN', loggedIn: result.loggedIn })
+      })
+  });  
 
   const onEmailSubmit = values => {
-    fetch(host + '/login/gen', {
+    fetch(API_HOST + '/login/gen', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         credentials: 'same-origin',
@@ -27,7 +39,7 @@ const Auth = (props) => {
         console.log(data);
         console.log('done with email submit');
       //   if (json.isAdmin) {
-      //     dispatch({ type: "SET_ADMIN", isAdmin: true })
+        // dispatch({ type: "SET_ADMIN", isAdmin: true })
       //     if (props.history.location.search)
       //       props.history.push(`/${props.history.location.search.split("?")[1]}`)
       //     else
@@ -39,7 +51,7 @@ const Auth = (props) => {
 
   const onPasswordSubmit = values => {
     var data = { ...values, email: email };
-    fetch(host + '/login', {
+    fetch(API_HOST + '/login', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         credentials: 'same-origin',
@@ -48,7 +60,7 @@ const Auth = (props) => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        props.history.push("/");
+        dispatch({ type: "SET_LOGGED_IN", loggedIn: data.loggedIn })
       });      
   }
   
