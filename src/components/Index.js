@@ -1,22 +1,37 @@
-import React /*, { useState, useEffect }*/  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import './Index.css' 
 
 const Index = (props) => {
 
-  const user = useSelector(state => state.reducers.user);
+  const [images, setImages] = useState();
 
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API + '/images')
+      .then(res => res.json())
+      .then(images => {
+        images = images.filter((image, key, array) => {
+          image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`;
+          array[key] = image;
+          return true;
+        });
+        setImages(images)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);  
+
+  if (!images) return(null);
   return (
-    <div>
-      <h1>Index</h1>
-      <p>
-        Logged in as {user.email}
-      </p>
-      <p>
-        Logout in <a href="/settings">settings</a>
-      </p>
+    <div className="Images">
+    {images.map((image, key) => 
+      <div className="Image" key={key}>
+        <img alt={image.name} src={image.src} /> 
+        <br/>
+        uploader: {image.uploader}
+      </div>
+    )}
     </div>
   );
 };

@@ -131,7 +131,7 @@ const Upload = (props) => {
       formData.append("file", file, file.name);
 
       const server = process.env.NODE_ENV === 'development' ? 
-        'http://localhost:8000/upload' : 'https://img.elev.us/upload';
+        process.env.REACT_APP_API + '/upload' : 'https://img.elev.us/upload';
 
       xhr.open("POST", server);
       xhr.responseType = 'json';

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink, withRouter } from "react-router-dom";
 
 const Wrapper = styled.div `
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width:150px;
