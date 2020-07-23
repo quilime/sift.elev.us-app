@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState } from 'react';
 import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from 'antd';
 
@@ -6,8 +6,10 @@ import './Auth.css'
 
 const Register = (props) => {
 
+  const [response, setResponse] = useState('Already received a password?');
+  const [showLogIn, setShowLogin] = useState(true);
+
   const onSubmit = values => {
-    console.log('on submit');
     fetch(process.env.REACT_APP_API + '/register', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
@@ -18,10 +20,13 @@ const Register = (props) => {
       .then(data => {
         if (!data.error) {
           console.log(data);
-          console.log('Please proceed to /login');
+          setResponse(`${data.msg}.`);
+          setShowLogin(true);
           // props.history.push("/login");
         } else {
-          throw new Error("Try Again");
+          setResponse(data.error);
+          setShowLogin(false);
+          throw new Error(data.error);
         }
       })
       .catch(err => console.error(err));
@@ -54,7 +59,10 @@ const Register = (props) => {
           </Button>
         </Form.Item>     
         <p>
-          Already got a password? <a href="/login">Log In</a>
+          {response}&nbsp;&nbsp;
+          {showLogIn && (
+            <a href="/login">Log In</a>
+          )}
         </p>
       </Form>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
-import './Index.css' 
+import './Images.css' 
 
 const Index = (props) => {
 

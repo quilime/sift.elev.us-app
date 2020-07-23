@@ -11,8 +11,6 @@ const Settings = (props) => {
   const user = useSelector(state => state.reducers.user);
   const dispatch = useDispatch();  
 
-  console.log(user);
-
   const logout = () => {
     fetch(process.env.REACT_APP_API + '/logout',{
       method: 'POST',
@@ -28,14 +26,17 @@ const Settings = (props) => {
   return (
     <div>
       <h1>Settings</h1>
-      <ul>
-      <li><strong>email</strong> {user.email}</li>
-      </ul>
       <p>
-        <Button type="danger" onClick={logout}>
-          Logout
-        </Button>
+      You are logged in as<br />
+      <strong>{user.email}</strong>
       </p>
+      <p>
+      User ID<br />
+      <strong>{user.uuid}</strong>
+      </p>      
+      <Button type="danger" onClick={logout}>
+        Logout
+      </Button>
     </div>
   );
 

@@ -8,7 +8,8 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Upload from "./components/Upload";
 import Settings from "./components/Settings";
-import Index from "./components/Index";
+import Images from "./components/Images";
+import Users from "./components/Users";
 
 const App = (props) => { 
 
@@ -48,15 +49,20 @@ const App = (props) => {
   return (
     <Router>
       <div id="nav">
-        <NavLink to={`/`} exact>Home</NavLink>
+      <NavLink to={`/`} exact>Home</NavLink>
+        <NavLink to={`/images`} exact>Images</NavLink>
         <NavLink to={`/upload`} exact>Upload</NavLink>
+        <NavLink to={`/users`} exact>Users</NavLink>        
         <NavLink to={`/settings`} exact>Settings</NavLink>
       </div>
       <div className="siteWrapper">
         <Switch>
-          <Route exact path="/" render={(props) => (
-            <Index />
+          <Route exact path="/images" render={(props) => (
+            <Images />
           )}/>
+          <Route exact path="/users" render={(props) => (
+            <Users />
+          )}/>          
           <Route exact path="/upload" render={(props) => (
             <Upload />
           )}/>
