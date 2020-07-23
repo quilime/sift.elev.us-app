@@ -4,7 +4,6 @@ import { connectRouter } from "connected-react-router";
 // import store_config from "../assets/store_config";
 
 const initialState = {
-  loggedIn: false
 }
 
 const reducers = function calls(state = { ...initialState }, action) {
@@ -12,8 +11,8 @@ const reducers = function calls(state = { ...initialState }, action) {
   switch (action.type) {
     case "SET_LOGGED_IN":
       return { ...state, loggedIn: action.loggedIn };
-    // case "SET_CONFIG":
-    //   return { ...state, config: action.config };
+    case "SET_USER":
+      return { ...state, user: action.user };
     // case "SET_PRODUCTS":
     //   config.products = action.products;
     //   return { ...state, config };

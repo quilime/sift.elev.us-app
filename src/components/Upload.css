@@ -1,11 +1,3 @@
-.content {
-  display: flex;
-  flex-direction: row;
-  padding:2em;
-  box-sizing: border-box;
-  width: 100%;
-}
-
 .upload {
   display: flex;
   flex-direction: column;
@@ -14,6 +6,14 @@
   text-align: left;
   overflow: hidden;
   margin-right:1em;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  padding:2em;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .row {

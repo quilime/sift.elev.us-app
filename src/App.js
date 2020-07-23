@@ -1,52 +1,70 @@
-import React from 'react'; // , { useEffect, useState }
+import React, { useEffect } from 'react'; 
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
-// import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 import "antd/dist/antd.css";
 
+import Register from "./components/Register";
+import Login from "./components/Login";
 import Upload from "./components/Upload";
-import Auth from "./components/Auth";
+import Settings from "./components/Settings";
+import Index from "./components/Index";
 
-const Site = styled.div `
-  padding-left:120px;
-  height:100%;
-`;
+const App = (props) => { 
 
+  const user = useSelector(state => state.reducers.user);
+  const dispatch = useDispatch();  
 
-function App() {
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API + '/login')
+      .then(res => res.json())
+      .then(result => {
+        dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);  
 
-  // const [loggedIn, setLoggedIn] = useState(false);
+  if (typeof user === "undefined") {
+    return(null);
+  }
 
-   // useEffect(() => {
+  if (!user) {
+    return (
+      <Router>
+        <div className="siteWrapper">
+          <Switch>
+            <Route exact path="/" render={(props) => (
+              <Register />
+            )}/>
+            <Route exact path="/login" render={(props) => (
+              <Login />
+            )} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 
-   //    // axios.get('/checkAuthentication')
-   //    //   .then(res => {
-   //    //     setLoggedIn(res.data.authenticated);
-   //    //   })
-   //    //   .catch((error) => {
-   //    //     setLoggedIn(false)
-   //    // });
-   //  }, []);  
- 
   return (
     <Router>
       <div id="nav">
-        <NavLink to={`/`} exact>Aggregate</NavLink>
+        <NavLink to={`/`} exact>Home</NavLink>
         <NavLink to={`/upload`} exact>Upload</NavLink>
-        <NavLink to={`/login`} exact>Login</NavLink>
+        <NavLink to={`/settings`} exact>Settings</NavLink>
       </div>
-      <Site>
+      <div className="siteWrapper">
         <Switch>
-          <Route exact path="/" />
+          <Route exact path="/" render={(props) => (
+            <Index />
+          )}/>
           <Route exact path="/upload" render={(props) => (
             <Upload />
           )}/>
-          <Route exact path="/login" render={(props) => (
-            <Auth />
+          <Route exact path="/settings" render={(props) => (
+            <Settings />
           )} />
         </Switch>
-      </Site>
+      </div>
     </Router>
   );
 }

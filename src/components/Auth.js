@@ -1,32 +1,32 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState/*, useEffect*/ }  from 'react';
 import { withRouter } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { /*useSelector, */useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
 // import { UploadOutlined } from '@ant-design/icons';
 
 import './Auth.css' 
 
-const API_HOST = 'http://localhost:8000';
-
 const Auth = (props) => {
 
-  const [view, setView] = useState(props.view);
+  const [view, setView] = useState('email');
   const [email, setEmail] = useState();  
 
-  const loggedIn = useSelector(state => state.reducers.loggedIn);
+  // const loggedInUser = useSelector(state => state.reducers.loggedInUser);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch(API_HOST + '/login/check')
-      .then(res => res.json())
-      .then(result => {
-        console.log(result);
-        dispatch({ type: 'SET_LOGGED_IN', loggedIn: result.loggedIn })
-      })
-  });  
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_API + '/login/check')
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       console.log('Auth');
+  //       // console.log(result);
+  //       // dispatch({ type: 'SET_LOGGED_IN', loggedIn: result.loggedIn })
+  //       // console.log(loggedIn);
+  //     })
+  // });  
 
   const onEmailSubmit = values => {
-    fetch(API_HOST + '/login/gen', {
+    fetch(process.env.REACT_APP_API + '/login/gen', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         credentials: 'same-origin',
@@ -49,20 +49,25 @@ const Auth = (props) => {
       });    
   };
 
+  const onShowPassword = () => {
+    setView('password');
+  };
+
   const onPasswordSubmit = values => {
-    var data = { ...values, email: email };
-    fetch(API_HOST + '/login', {
+    var data = { password: values.password, username: values.email };
+    console.log(data);
+    fetch(process.env.REACT_APP_API + '/login', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         credentials: 'same-origin',
         body: JSON.stringify(data)
       })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        dispatch({ type: "SET_LOGGED_IN", loggedIn: data.loggedIn })
+      .then(loggedInUser => {
+        console.log(loggedInUser);
+        dispatch({ type: "SET_LOGGED_IN_USER", loggedInUser: loggedInUser })
       });      
-  }
+  };
   
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
@@ -74,25 +79,25 @@ const Auth = (props) => {
         name="basic"
         initialValues={{ remember: false }}
         onFinish={onEmailSubmit}
-        onFinishFailed={onFinishFailed}
-      >
+        onFinishFailed={onFinishFailed}>
         <p>
-        Enter your email address for a one-time password. 
+        Enter your email address for a one-time login code. 
         </p>
         <Form.Item
           name="email"
-          defaultValue="sdfsdf"
-          rules={[{ required: true, message: 'Please input your email' }]}
-        >
+          rules={[{ required: true, message: 'Please input your email' }]}>
           <Input 
             placeholder="email"
           />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Send New Password
+            Send New Login Code
           </Button>
-        </Form.Item>
+        </Form.Item>     
+        <p>
+          Received your code? <a onClick={onShowPassword}>Enter it here</a>
+        </p>
       </Form>
     );
   }
@@ -106,13 +111,22 @@ const Auth = (props) => {
         onFinishFailed={onFinishFailed}
       >
         <p>
-        Enter the one-time password you received at <strong>{email}</strong>
-        </p>    
+          Enter the one-time login code you<br />received at <strong>{email}</strong>
+        </p>
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: 'Please input your email' }]}>
+          <Input 
+            placeholder="email"
+          />
+        </Form.Item>        
         <Form.Item
           name="password"
           rules={[{ required: true, message: 'Please input the password you received in your email' }]}
         >
-          <Input />
+          <Input 
+          placeholder="login code"
+          />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -125,9 +139,8 @@ const Auth = (props) => {
 
   return (
     <div className="formWrapper">
-      <div>
-        <Login />
-      </div>
+      <h1>Sift Login</h1>
+      <Login />
     {view === 'password' && (
       <Password />
     )}

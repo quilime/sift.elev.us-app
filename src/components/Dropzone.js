@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { UploadOutlined } from '@ant-design/icons';
 
 const Title = styled.div `
   display:block;
+  margin-top:2em;
   text-align:center;
   font-weight:bold;
 `;
@@ -11,7 +13,6 @@ const DropzoneElem = styled.div `
   position:absolute;
   top:0;
   left:0;
-  background:#ddd;
   align-items: center;
   justify-content: center;
   height:100%;
@@ -100,20 +101,8 @@ class Dropzone extends Component {
           onChange={this.onFilesAdded}
           style={{ display: "none" }}
         />
-        <img
-          alt="upload"
-          style={{
-            opacity : "0.3",
-            height : "64px",
-            width : "64px",
-            margin : "0 auto",
-            display : "block",
-            marginTop : "10%"
-          }}
-          src="baseline-cloud_upload-24px.svg"
-        />
         <Title>
-          Upload jpg, png, or gifs
+          <UploadOutlined /> Upload jpg, png, or gifs
         </Title>
       </DropzoneElem>
     );
