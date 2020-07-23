@@ -177,8 +177,8 @@ const Upload = (props) => {
         />
         <div className="files">
           {files.map(file => {
-
-            let href = ['http://localhost:3000/static', file.href, file.localName].join('/');
+            
+            let href = [process.env.REACT_APP_IMG_HOST, file.href, file.localName].join('/');
 
             return (
             <div className="row" key={file.name}>
