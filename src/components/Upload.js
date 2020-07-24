@@ -130,10 +130,9 @@ const Upload = (props) => {
       const formData = new FormData();
       formData.append("file", file, file.name);
 
-      const server = process.env.NODE_ENV === 'development' ? 
-        process.env.REACT_APP_API + '/upload' : 'https://img.elev.us/upload';
-
-      xhr.open("POST", server);
+      xhr.open("POST", process.env.REACT_APP_API + '/upload');
+      xhr.withCredentials = true;
+      // xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.responseType = 'json';
       xhr.send(formData);
     });

@@ -13,20 +13,19 @@ const Register = (props) => {
     fetch(process.env.REACT_APP_API + '/register', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
-        credentials: 'same-origin',
+        credentials: 'include',
         body: JSON.stringify(values)
       })
       .then(res => res.json())
-      .then(data => {
-        if (!data.error) {
-          console.log(data);
-          setResponse(`${data.msg}.`);
+      .then(result => {
+        if (!result.error) {
+          setResponse(`${result.msg}.`);
           setShowLogin(true);
           // props.history.push("/login");
         } else {
-          setResponse(data.error);
+          setResponse(result.error);
           setShowLogin(false);
-          throw new Error(data.error);
+          throw new Error(result.error);
         }
       })
       .catch(err => console.error(err));
@@ -57,7 +56,7 @@ const Register = (props) => {
           <Button type="primary" htmlType="submit">
             Get Password
           </Button>
-        </Form.Item>     
+        </Form.Item>
         <p>
           {response}&nbsp;&nbsp;
           {showLogIn && (

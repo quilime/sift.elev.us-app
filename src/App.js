@@ -17,7 +17,10 @@ const App = (props) => {
   const dispatch = useDispatch();  
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API + '/login')
+    fetch(process.env.REACT_APP_API + '/login', {
+      headers: new Headers({ 'content-type': 'application/json' }),
+      credentials: 'include'
+    })
       .then(res => res.json())
       .then(result => {
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });

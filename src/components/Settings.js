@@ -14,6 +14,7 @@ const Settings = (props) => {
   const logout = () => {
     fetch(process.env.REACT_APP_API + '/logout',{
       method: 'POST',
+      credentials: 'include',
       headers: new Headers({ 'content-type': 'application/json' }),
       })
       .then(res => res.json())

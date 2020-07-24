@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
-// import { UploadOutlined } from '@ant-design/icons';
 
 import './Auth.css' 
 
@@ -15,14 +14,15 @@ const Login = (props) => {
     fetch(process.env.REACT_APP_API + '/login', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
-        // credentials: 'same-origin',
+        credentials: 'include',
         body: JSON.stringify(values)
       })
       .then(res => res.json())
       .then(result => {
         if (result.error) throw result.error;
+        console.log(result);
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-        props.history.push("/");
+        // props.history.push("/");
       })
       .catch(err => console.error(err));
   };
