@@ -26,15 +26,15 @@ const Settings = (props) => {
 
   return (
     <div>
-      <h1>Settings</h1>
       <p>
-      You are logged in as<br />
+      Logged in as<br />
       <strong>{user.email}</strong>
       </p>
       <p>
       User ID<br />
       <strong>{user.uuid}</strong>
       </p>      
+      <br />
       <Button type="danger" onClick={logout}>
         Logout
       </Button>

@@ -52,10 +52,8 @@ const App = (props) => {
   return (
     <Router>
       <div id="nav">
-      <NavLink to={`/`} exact>Home</NavLink>
         <NavLink to={`/images`} exact>Images</NavLink>
         <NavLink to={`/upload`} exact>Upload</NavLink>
-        <NavLink to={`/users`} exact>Users</NavLink>        
         <NavLink to={`/settings`} exact>Settings</NavLink>
       </div>
       <div className="siteWrapper">

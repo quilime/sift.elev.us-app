@@ -37,7 +37,7 @@ a {
 #nav {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   width:150px;
   z-index:1000;
   background:#fff;
@@ -63,5 +63,6 @@ a {
 }
 
 .siteWrapper {
-  padding:2em;
+  padding:1em 3em 3em 3em;
+  margin-left:150px;
 }
