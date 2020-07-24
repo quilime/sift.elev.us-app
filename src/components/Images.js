@@ -2,26 +2,36 @@ import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
+import Image from "./Image";
+
 import './Images.css' 
 
-const Index = (props) => {
+const Images = (props) => {
 
   const [images, setImages] = useState();
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API + '/images',{
-      credentials: 'include'
+    console.log('use efect');
+    fetch(process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : ''),{
+      credentials: 'include',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': 0
+      }
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result);
         if (result.length) {
-          let filteredImages = result.filter((image, key, array) => {
-            image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`;
-            array[key] = image;
-            return true;
+          const filteredImages = result.map((image, i) => {
+            return {
+              src: `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`,
+              name: image.name,
+              uuid: image.uuid,
+              createdAt: image.createdAt,
+              uploader: image.uploader
+            };
           });
-          console.log(filteredImages);
           setImages(filteredImages);
         } else {
           setImages(null)
@@ -35,17 +45,10 @@ const Index = (props) => {
   return (
     <div className="Images">    
     {images.map((image, key) => 
-      <div className="Image" key={key}>
-        <img alt={image.name} src={image.src} /> 
-        <br/>
-        <a href={image.src}>{image.src}</a>
-        <br/>
-        uploaded by {image.uploader}
-        <br />
-      </div>
+      <Image image={image} key={key} />
     )}
     </div>
   );
 };
 
-export default withRouter(Index);
+export default withRouter(Images);

@@ -32,7 +32,7 @@ const Settings = (props) => {
       </p>
       <p>
       User ID<br />
-      <strong>{user.uuid}</strong>
+      <a href={`/users/${user.uuid}`}>{user.uuid}</a>
       </p>      
       <br />
       <Button type="danger" onClick={logout}>

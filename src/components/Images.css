@@ -1,9 +1,15 @@
 .Images {
+  max-width:800px;
 }
 
 .Image {
+  margin-bottom:3em;
 }
 
 .Image img {
   max-width:100%;
+}
+
+.Image .edit {
+  margin-top:1em;
 }

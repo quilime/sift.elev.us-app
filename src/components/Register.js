@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from 'antd';
 
-import './Auth.css' 
+import './Register.css' 
 
 const Register = (props) => {
 

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
 
-import './Auth.css' 
+import './Login.css' 
 
 const Login = (props) => {
 
@@ -22,7 +22,7 @@ const Login = (props) => {
         if (result.error) throw result.error;
         console.log(result);
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-        // props.history.push("/");
+        props.history.push("/");
       })
       .catch(err => console.error(err));
   };

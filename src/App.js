@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Upload from "./components/Upload";
 import Settings from "./components/Settings";
 import Images from "./components/Images";
+import Image from "./components/Image";
 import Users from "./components/Users";
 
 const App = (props) => { 
@@ -61,6 +62,17 @@ const App = (props) => {
           <Route exact path="/images" render={(props) => (
             <Images />
           )}/>
+          <Route exact path="/users/:uuid" render={(props) => (
+            <Images 
+              uploadedBy={props.match.params.uuid}
+            />
+          )}/>          
+          <Route exact path="/images/:uuid" render={(props) => (
+            <Image 
+              edit={true} 
+              uuid={props.match.params.uuid} 
+            />
+          )}/>          
           <Route exact path="/users" render={(props) => (
             <Users />
           )}/>          
