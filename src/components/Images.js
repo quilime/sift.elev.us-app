@@ -16,14 +16,10 @@ const filterData = data => {
   });
 }
 
-
-
 const Images = (props) => {
 
   const url = process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : '');
-
   const [data, setData] = useState(null);
-  // console.log('data', data);
 
   const fetchData = async () => {
     let response = await fetch(url, {
@@ -44,9 +40,6 @@ const Images = (props) => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const images = useFetch(process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : ''));
-  // console.log('images', images);
-
   if (!data || !data.length) return(<div>loading...</div>);
 
   return (
@@ -59,4 +52,3 @@ const Images = (props) => {
 };
 
 export default withRouter(Images);
-

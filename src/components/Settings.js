@@ -1,4 +1,4 @@
-import React /*, { useState, useEffect }*/  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
@@ -11,6 +11,27 @@ const Settings = (props) => {
 
   const user = useSelector(state => state.reducers.user);
   const dispatch = useDispatch();
+
+  const url = process.env.REACT_APP_API + '/settings';
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    let response = await fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': 0
+      }
+    });
+    const json = await response.json();
+    setData(json);
+    console.log(json);
+  }
+  useEffect(() => {
+    fetchData();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   const logout = async () => {
@@ -42,6 +63,8 @@ const Settings = (props) => {
     console.log('onFinishFailed');
   }
 
+  if (!data) return(<div>loading...</div>);
+
   return (
     <div style={{ maxWidth: "400px" }}>
       <p>
@@ -55,7 +78,7 @@ const Settings = (props) => {
         name="basic"
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
-        initialValues={{ username : user.username }}
+        initialValues={{ username : data.username }}
       >
         <Form.Item label="Display Name" name="username">
           <Input placeholder="Display Name" />
