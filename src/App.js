@@ -78,10 +78,14 @@ const App = (props) => {
             />
           )}/>
           <Route exact path="/users" render={(props) => (
-            <Users />
+            <Users
+              key={new Date().getTime()}
+            />
           )}/>
           <Route exact path="/upload" render={(props) => (
-            <Upload />
+            <Upload
+              key={new Date().getTime()}
+            />
           )}/>
           <Route exact path="/settings" render={(props) => (
             <Settings />
