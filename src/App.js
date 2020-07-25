@@ -61,14 +61,17 @@ const App = (props) => {
       <div className="siteWrapper">
         <Switch>
           <Route exact path="/images" render={(props) => (
-            <Images />
-          )}/>
-          <Route exact path="/users/:username" render={(props) => (
             <Images
+              key={new Date().getTime()}
+            />
+          )}/>
+          <Route exact path="/images/:username" render={(props) => (
+            <Images
+              key={new Date().getTime()}
               uploadedBy={props.match.params.username}
             />
           )}/>
-          <Route exact path="/images/:uuid" render={(props) => (
+          <Route exact path="/image/:uuid" render={(props) => (
             <Image
               edit={true}
               uuid={props.match.params.uuid}

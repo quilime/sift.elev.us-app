@@ -42,17 +42,6 @@ const Settings = (props) => {
     console.log('onFinishFailed');
   }
 
-
-  const validatePhone = (rule: any, value: any, callback: any) => {
-    if(value ){
-      console.log(value);
-      callback(`Phone number is not valid`);
-    }
-    else {
-      callback();
-    }
-  };
-
   return (
     <div style={{ maxWidth: "400px" }}>
       <p>
@@ -64,12 +53,9 @@ const Settings = (props) => {
 
       <Form
         name="basic"
-        initialValues={{ remember: false }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
-        initialValues={{
-          ['username']: user.username
-        }}
+        initialValues={{ username : user.username }}
       >
         <Form.Item label="Display Name" name="username">
           <Input placeholder="Display Name" />

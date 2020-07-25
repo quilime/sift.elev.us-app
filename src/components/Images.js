@@ -16,12 +16,16 @@ const filterData = data => {
   });
 }
 
-const useFetch = url => {
+
+
+const Images = (props) => {
+
+  const url = process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : '');
 
   const [data, setData] = useState(null);
+  // console.log('data', data);
 
-  async function fetchData() {
-
+  const fetchData = async () => {
     let response = await fetch(url, {
       credentials: 'include',
       headers: {
@@ -30,31 +34,25 @@ const useFetch = url => {
         'Expires': 0
       }
     });
-
     const json = await response.json();
-
     const filteredData = filterData(json);
-
     setData(filteredData);
-    console.log(json);
   }
 
-  useEffect(() => {fetchData()},[url]);
+  useEffect(() => {
+    fetchData();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return data;
-};
+  // const images = useFetch(process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : ''));
+  // console.log('images', images);
 
-
-const Images = (props) => {
-
-  const images = useFetch(process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : ''));
-
-  if (!images || !images.length) return(<div>loading...</div>);
+  if (!data || !data.length) return(<div>loading...</div>);
 
   return (
     <div className="Images">
-    {images.map((image, key) =>
-      <Image image={image} key={key} />
+    {data.map((image, key) =>
+      <Image image={image} key={image.uuid} />
     )}
     </div>
   );

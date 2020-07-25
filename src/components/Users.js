@@ -14,7 +14,6 @@ const Users = (props) => {
     })
       .then(res => res.json())
       .then(result => {
-        // console.log(result);
         setUsers(result);
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,7 +25,7 @@ const Users = (props) => {
     <div className="Users">
     {users.map((user, key) =>
       <div className="User" key={key}>
-        <a href={`/users/${user.username}`}>{user.username}</a>
+        <a href={`/images/${user.username}`}>{user.username}</a>
       </div>
     )}
     </div>
