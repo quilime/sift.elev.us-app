@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
-import './Users.css' 
+import './Users.css'
 
 const Users = (props) => {
 
@@ -14,20 +14,19 @@ const Users = (props) => {
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result);
+        // console.log(result);
         setUsers(result);
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  
+  }, []);
 
   if (!users || !users.length) return(null);
 
   return (
     <div className="Users">
-    {users.map((user, key) => 
+    {users.map((user, key) =>
       <div className="User" key={key}>
-      {user.email}<br />
-      {user.uuid}
+        <a href={`/users/${user.username}`}>{user.username}</a>
       </div>
     )}
     </div>

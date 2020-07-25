@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
 
-import './Login.css' 
+import './Login.css'
 
 const Login = (props) => {
 
@@ -22,11 +22,11 @@ const Login = (props) => {
         if (result.error) throw result.error;
         console.log(result);
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-        props.history.push("/");
+        // props.history.push("/");
       })
       .catch(err => console.error(err));
   };
-  
+
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
@@ -46,7 +46,7 @@ const Login = (props) => {
           name="password"
           rules={[{ required: true, message: 'Please input the password you received in your email' }]}
         >
-          <Input 
+          <Input
           placeholder="password"
           />
         </Form.Item>
@@ -57,8 +57,8 @@ const Login = (props) => {
         </Form.Item>
         <p>
           Need a password? <a href="/">Get a new one</a>
-        </p>        
-      </Form>   
+        </p>
+      </Form>
     </div>
   );
 };

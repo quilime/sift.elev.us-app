@@ -1,40 +1,88 @@
 import React /*, { useState, useEffect }*/  from 'react';
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from 'antd';
+import { Form, Input, Button } from 'antd';
+
 // import { UploadOutlined } from '@ant-design/icons';
 
-import './Settings.css' 
+import './Settings.css'
 
 const Settings = (props) => {
 
   const user = useSelector(state => state.reducers.user);
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
 
-  const logout = () => {
-    fetch(process.env.REACT_APP_API + '/logout',{
+
+  const logout = async () => {
+    let res = await fetch(process.env.REACT_APP_API + '/logout',{
       method: 'POST',
       credentials: 'include',
       headers: new Headers({ 'content-type': 'application/json' }),
-      })
-      .then(res => res.json())
-      .then(result => {
-        dispatch({ type: 'SET_USER', user: null });
-        props.history.push("/");
-      })    
+    });
+    let data = await res.json();
+    console.log(data);
+    dispatch({ type: 'SET_USER', user: null });
+    props.history.push("/");
+  };
+
+
+  const onSubmit = async (values) => {
+    let res = await fetch(process.env.REACT_APP_API + '/settings',{
+      method: 'POST',
+      credentials: 'include',
+      headers: new Headers({ 'content-type': 'application/json' }),
+      body: JSON.stringify(values)
+    });
+    let data = await res.json();
+    dispatch({ type: 'SET_USER', user: typeof data.user === "undefined" ? null : data.user });
+  }
+
+
+  const onFinishFailed = async() => {
+    console.log('onFinishFailed');
+  }
+
+
+  const validatePhone = (rule: any, value: any, callback: any) => {
+    if(value ){
+      console.log(value);
+      callback(`Phone number is not valid`);
+    }
+    else {
+      callback();
+    }
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "400px" }}>
       <p>
-      Logged in as<br />
-      <strong>{user.email}</strong>
+        Logged in as <strong>{user.email}</strong>
       </p>
       <p>
-      User ID<br />
-      <a href={`/users/${user.uuid}`}>{user.uuid}</a>
-      </p>      
+        User ID <a href={`/users/${user.uuid}`}>{user.uuid}</a>
+      </p>
+
+      <Form
+        name="basic"
+        initialValues={{ remember: false }}
+        onFinish={onSubmit}
+        onFinishFailed={onFinishFailed}
+        initialValues={{
+          ['username']: user.username
+        }}
+      >
+        <Form.Item label="Display Name" name="username">
+          <Input placeholder="Display Name" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Save Settings
+          </Button>
+        </Form.Item>
+      </Form>
+
       <br />
+
       <Button type="danger" onClick={logout}>
         Logout
       </Button>

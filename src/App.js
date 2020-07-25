@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; 
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -12,10 +12,10 @@ import Images from "./components/Images";
 import Image from "./components/Image";
 import Users from "./components/Users";
 
-const App = (props) => { 
+const App = (props) => {
 
   const user = useSelector(state => state.reducers.user);
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API + '/login', {
@@ -27,7 +27,7 @@ const App = (props) => {
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  
+  }, []);
 
   if (typeof user === "undefined") {
     return(null);
@@ -55,6 +55,7 @@ const App = (props) => {
       <div id="nav">
         <NavLink to={`/images`} exact>Images</NavLink>
         <NavLink to={`/upload`} exact>Upload</NavLink>
+        <NavLink to={`/users`} exact>Users</NavLink>
         <NavLink to={`/settings`} exact>Settings</NavLink>
       </div>
       <div className="siteWrapper">
@@ -62,20 +63,20 @@ const App = (props) => {
           <Route exact path="/images" render={(props) => (
             <Images />
           )}/>
-          <Route exact path="/users/:uuid" render={(props) => (
-            <Images 
-              uploadedBy={props.match.params.uuid}
+          <Route exact path="/users/:username" render={(props) => (
+            <Images
+              uploadedBy={props.match.params.username}
             />
-          )}/>          
+          )}/>
           <Route exact path="/images/:uuid" render={(props) => (
-            <Image 
-              edit={true} 
-              uuid={props.match.params.uuid} 
+            <Image
+              edit={true}
+              uuid={props.match.params.uuid}
             />
-          )}/>          
+          )}/>
           <Route exact path="/users" render={(props) => (
             <Users />
-          )}/>          
+          )}/>
           <Route exact path="/upload" render={(props) => (
             <Upload />
           )}/>
