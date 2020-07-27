@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import './Images.css';
 
 const md = require('markdown-it')({ html: true, linkify: true })
+          .disable([ 'image' ])
           .use(require('markdown-it-hashtag'));
 
 const showdown = require('showdown');
