@@ -11,7 +11,7 @@ code {
     monospace;
 }
 
-a { 
+a {
   color:#666 !important;
   background:#eee;
   display: inline-block;
@@ -43,14 +43,14 @@ a {
   padding-bottom:1em;
 }
 
-#nav a { 
+#nav a {
   color:#000;
   display: block;
   margin:1em;
   padding:0.25em;
   font-weight:bold;
   border-bottom: 3px solid #ddd;
-}  
+}
 
 #nav a:hover {
   border-bottom: 3px solid #aaa;
@@ -63,4 +63,8 @@ a {
 .siteWrapper {
   padding:1em 3em 3em 3em;
   margin-left:150px;
+}
+
+
+.tag {
 }

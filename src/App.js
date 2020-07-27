@@ -11,6 +11,7 @@ import Settings from "./components/Settings";
 import Images from "./components/Images";
 import Image from "./components/Image";
 import Users from "./components/Users";
+import Tags from "./components/Tags";
 
 const App = (props) => {
 
@@ -64,6 +65,9 @@ const App = (props) => {
             <Images
               key={new Date().getTime()}
             />
+          )}/>
+          <Route exact path="/tags/:tag" render={(props) => (
+            <Tags />
           )}/>
           <Route exact path="/images/:username" render={(props) => (
             <Images

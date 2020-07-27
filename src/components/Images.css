@@ -10,11 +10,31 @@
   max-width:100%;
 }
 
+.Image .meta a {
+  border:0;
+  text-decoration:underline;
+}
 .Image .meta {
   margin-top:2em;
   font-size:.7em;
   font-style:italic;
 }
+.Image .meta ul {
+  margin:0.5em 0 0 0;
+  padding:0;
+  list-style-type:none;
+}
+.Image .meta li {
+  margin: 0;
+  padding: 0;
+}
 
-.Image .description {
+.Image .description a {
+  font-weight:normal;
+  color:#888 !important;
+  border:0;
+  text-decoration:underline;
+}
+
+.Image .hash_tag {
 }
