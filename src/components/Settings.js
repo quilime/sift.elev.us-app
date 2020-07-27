@@ -14,6 +14,7 @@ const Settings = (props) => {
 
   const url = process.env.REACT_APP_API + '/settings';
   const [data, setData] = useState(null);
+  const [responseText, setResponseText] = useState();
 
   const fetchData = async () => {
     let response = await fetch(url, {
@@ -26,7 +27,6 @@ const Settings = (props) => {
     });
     const json = await response.json();
     setData(json);
-    console.log(json);
   }
   useEffect(() => {
     fetchData();
@@ -56,6 +56,10 @@ const Settings = (props) => {
     });
     let data = await res.json();
     dispatch({ type: 'SET_USER', user: typeof data.user === "undefined" ? null : data.user });
+    setResponseText("Settings Saved!");
+    setTimeout(() => {
+      setResponseText('');
+    }, 3000);
   }
 
 
@@ -86,7 +90,7 @@ const Settings = (props) => {
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save Settings
-          </Button>
+          </Button> {responseText}
         </Form.Item>
       </Form>
 

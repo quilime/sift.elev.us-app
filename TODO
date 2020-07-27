@@ -1,10 +1,34 @@
 TODO
+--
 
-- make sure json isn't caching
-- view images by user
+- delete images
+
+- upload just keep dragging into
+  - drag anywhere to upload
+
+- pagination
+
 - add image to your own feed
   - view people who have added it to their feed
+
+- website feedback
+
+- check for dupe images
+- sift ai that can check images
+
+- "fav" image to your feed
+
 - tags
-- ways of viewing the images
-- delete image
-- drag anywhere to upload
+  - filter by tags
+- mark image for delete
+- gallery views
+
+- image gallery idea -- small groups of images
+- image "mood" (category?)
+- images are defaultly private to the uploader and not visible on the main feed
+
+- mood description (text, and or groups of image)
+
+- include links
+
+

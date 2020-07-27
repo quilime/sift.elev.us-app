@@ -7,10 +7,7 @@ import './Users.css'
 const Users = (props) => {
 
   const url = process.env.REACT_APP_API + '/users';
-
   const [data, setData] = useState(null);
-  // const [users, setUsers] = useState();
-
   const fetchData = async () => {
     let response = await fetch(url, {
       credentials: 'include',

@@ -9,3 +9,13 @@
 .Image img {
   max-width:100%;
 }
+
+.Image .meta {
+  margin-top:2em;
+  font-size:.7em;
+  font-style:italic;
+}
+
+.Image .description {
+  white-space: pre;
+}

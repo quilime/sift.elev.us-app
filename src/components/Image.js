@@ -1,13 +1,17 @@
 import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
-// import { Button } from 'antd';
-// import { useSelector } from "react-redux";
+import { Button, Input, Form } from 'antd';
+import { useSelector } from "react-redux";
 
 import './Images.css'
 
 const Image = (props) => {
 
+  const user = useSelector(state => state.reducers.user);
+
   const [image, setImage] = useState(props.image);
+  const [editImage, setEditImage] = useState();
+  const [responseText, setResponseText] = useState();
 
   useEffect(() => {
     if (props.uuid) {
@@ -37,26 +41,89 @@ const Image = (props) => {
   //   console.log('delete image');
   // }
 
-  if (!image) return(null);
+  const onEditImage = () => {
+    setEditImage(true);
+  }
+
+  const onSubmit = async (values) => {
+    setResponseText("Saving... ");
+    let res = await fetch(process.env.REACT_APP_API + '/images/' + props.uuid,{
+      method: 'POST',
+      credentials: 'include',
+      headers: new Headers({ 'content-type': 'application/json' }),
+      body: JSON.stringify(values)
+    });
+    let image = await res.json();
+    if (image) {
+      image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`;
+      setImage(image);
+      setEditImage(false);
+      setResponseText('');
+    }
+  }
+
+  const onFinishFailed = async() => {
+    console.log('onFinishFailed');
+  }
+
+  if (!image) return(<div>loading...</div>);
+
+  // {/*{initialValues={{ username : data.username }}}*/}
 
   return (
     <div className="Image">
       <a href={`/image/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
       </a>
-      <div>
-        Added By: <a href={`/images/${image.username}`}>{image.username}</a><br/>
-      </div>
+      <p>
+        via <a href={`/images/${image.username}`}>{image.username}</a><br/>
+      </p>
       {props.edit && (
         <div className="edit">
-          Added On: {image.createdAt}<br/>
+
+          <p className="description">
+          {image.description}
+          </p>
+
+
+          {image.uploader === user.uuid && !editImage && (
+            <Button
+              onClick={onEditImage}
+            >
+            Edit
+            </Button>
+          )}
+
+
+          {image.uploader === user.uuid && editImage && (
+          <Form
+            name="basic"
+            onFinish={onSubmit}
+            onFinishFailed={onFinishFailed}
+            initialValues={{ description : image.description }}
+          >
+            <Form.Item name="description">
+              <Input.TextArea placeholder="Image Description" rows={4} />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button> {responseText}
+            </Form.Item>
+          </Form>
+        )}
+          {/*<Button type="danger" onClick={del}>*/}
+            {/*Delete*/}
+          {/*</Button>*/}
+          <p className="meta">
+          Added: {image.createdAt}<br/>
+          Updated: {image.updatedAt}<br/>
           Size: {fileSize(image.size)}<br/>
-          Dimensions: {image.width} x {image.height}<br/>
-          {/*<Button type="danger" onClick={del}>
-            Delete
-          </Button>*/}
+          Dims: {image.width} x {image.height}<br/>
+          Type: {image.type}
+          </p>
         </div>
-      )}
+        )}
     </div>
   );
 };

@@ -88,9 +88,7 @@ const App = (props) => {
             />
           )}/>
           <Route exact path="/settings" render={(props) => (
-            <Settings
-              key={new Date().getTime()}
-            />
+            <Settings />
           )} />
         </Switch>
       </div>
