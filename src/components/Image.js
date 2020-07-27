@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
-import { Button, Input, Form } from 'antd';
+import { Switch, Button, Input, Form } from 'antd';
+
 import { useSelector } from "react-redux";
 
 import './Images.css'
@@ -11,6 +12,7 @@ const Image = (props) => {
 
   const [image, setImage] = useState(props.image);
   const [editImage, setEditImage] = useState();
+  const [showMeta, setShowMeta] = useState(false);
   const [responseText, setResponseText] = useState();
 
   useEffect(() => {
@@ -115,13 +117,22 @@ const Image = (props) => {
           {/*<Button type="danger" onClick={del}>*/}
             {/*Delete*/}
           {/*</Button>*/}
-          <p className="meta">
-          Added: {image.createdAt}<br/>
-          Updated: {image.updatedAt}<br/>
-          Size: {fileSize(image.size)}<br/>
-          Dims: {image.width} x {image.height}<br/>
-          Type: {image.type}
-          </p>
+          <div className="meta">
+            meta <Switch
+              size="small"
+              onChange={(checked, event) => { setShowMeta(checked) }}
+              />
+            {showMeta && (
+              <p>
+              <br />
+              Added: {image.createdAt}<br/>
+              Updated: {image.updatedAt}<br/>
+              Size: {fileSize(image.size)}<br/>
+              Dims: {image.width} x {image.height}<br/>
+              Type: {image.type}
+              </p>
+            )}
+          </div>
         </div>
         )}
     </div>
