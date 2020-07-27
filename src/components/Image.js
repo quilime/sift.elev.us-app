@@ -1,10 +1,13 @@
 import React, { useState, useEffect }  from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from "react-router-dom";
 import { Switch, Button, Input, Form } from 'antd';
-
 import { useSelector } from "react-redux";
-
 import './Images.css'
+
+const showdown  = require('showdown');
+
+const converter = new showdown.Converter()
 
 const Image = (props) => {
 
@@ -84,7 +87,7 @@ const Image = (props) => {
         <div className="edit">
 
           <p className="description">
-          {image.description}
+          { ReactHtmlParser (image.description.replace(/(?:\r\n|\r|\n)/g, '<br />')) }
           </p>
 
 
