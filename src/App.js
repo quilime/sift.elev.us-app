@@ -30,6 +30,7 @@ const App = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   if (typeof user === "undefined") {
     return(null);
   }
@@ -61,16 +62,26 @@ const App = (props) => {
       </div>
       <div className="siteWrapper">
         <Switch>
-          <Route exact path="/images" render={(props) => (
-            <Images />
+          <Route exact path="/images"  render={(props) => (
+            <Images
+              url={(process.env.REACT_APP_API + '/images')}
+              page={1}
+              key={Math.random()}
+              reload={true}
+            />
+          )}/>
+          <Route exact path="/images/page/:page"  render={(props) => (
+            <Images
+              url={(process.env.REACT_APP_API + '/images')}
+              page={props.match.params.page}
+            />
           )}/>
           <Route exact path="/tags/:tag" render={(props) => (
             <Tags />
           )}/>
           <Route exact path="/images/:username" render={(props) => (
             <Images
-              key={new Date().getTime()}
-              uploadedBy={props.match.params.username}
+            url={(process.env.REACT_APP_API + '/images/uploadedby/' + props.match.params.username)}
             />
           )}/>
           <Route exact path="/image/:uuid" render={(props) => (
@@ -85,9 +96,7 @@ const App = (props) => {
             />
           )}/>
           <Route exact path="/upload" render={(props) => (
-            <Upload
-              key={new Date().getTime()}
-            />
+            <Upload />
           )}/>
           <Route exact path="/settings" render={(props) => (
             <Settings />

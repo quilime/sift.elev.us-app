@@ -11,27 +11,21 @@ code {
     monospace;
 }
 
-a {
+#nav a, a.strong {
   color:#666 !important;
   background:#eee;
   display: inline-block;
-  margin:0;
-  padding:0;
   font-weight:bold;
-  border-bottom: 3px solid #ddd;
-
-  &:hover {
-    background:#444;
-    color:#fff;
-    border-bottom: 3px solid #444;
-    border-color:#444 !important;
-  }
-
-  &.active {
-    border-bottom: 3px solid #000 !important;
-  }
+  border-bottom: 2px solid #999;
 }
-
+#nav a {
+  margin:1em;
+  padding:0.25em;
+  display:block;
+}
+#nav a.active, a.active {
+  border-bottom: 3px solid #000 !important;
+}
 #nav {
   position: fixed;
   top: 0;
@@ -43,22 +37,7 @@ a {
   padding-bottom:1em;
 }
 
-#nav a {
-  color:#000;
-  display: block;
-  margin:1em;
-  padding:0.25em;
-  font-weight:bold;
-  border-bottom: 3px solid #ddd;
-}
 
-#nav a:hover {
-  border-bottom: 3px solid #aaa;
-}
-
-#nav a.active {
-  border-bottom: 3px solid #000 !important;
-}
 
 .siteWrapper {
   padding:1em 3em 3em 3em;

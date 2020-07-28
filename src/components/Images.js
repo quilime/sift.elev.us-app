@@ -1,8 +1,8 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect  }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
 // import { Pagination } from 'antd';
-import { Button, List } from 'antd';
+import { List } from 'antd';
 
 import Image from "./Image";
 import './Images.css'
@@ -21,55 +21,66 @@ const filterData = data => {
 
 const Images = (props) => {
 
-  const url = process.env.REACT_APP_API + '/images' + (props.uploadedBy ? '/uploadedby/' + props.uploadedBy : '');
-  const [data, setData] = useState(null);
-
-  const fetchData = async () => {
-    let response = await fetch(url, {
-      credentials: 'include',
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': 0
-      }
-    });
-    const json = await response.json();
-    const filteredData = filterData(json);
-    setData(filteredData);
-  }
+  const url = props.url;
+  const [data, setData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(props.page);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
+    const fetchData = async () => {
+      let res = await fetch(url, {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': 0
+        }
+      });
+      const json = await res.json();
+      setData(filterData(json));
+    }
     fetchData();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [url]);
+
+
+  const setUrl = (page) => {
+    props.history.push("/images/page/" + page);
+  }
+
 
   if (!data || !data.length) return(<div>loading...</div>);
 
   return (
     <div className="Images">
-    <Button
-      onClick={fetchData}
-    >
-    Refresh
-    </Button>
-    <br /><br />
     <List
     itemLayout="vertical"
     pagination={{
-      onChange: page => {
+      total: data.length,
+      showTotal: (total, range) => `${range[0]}—${range[1]} of ${total}`, //total => `${total} images`,
+      onChange: (page, pageSize) => {
         window.scrollTo(0, 0);
-        console.log(page);
+        setPageNumber(page);
+        setPageSize(pageSize);
+        setUrl(page);
       },
-      pageSize: 10,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showLessItems: false,
+      pageSize: pageSize,
+      size: "small",
+      defaultCurrent: 1,
+      current: pageNumber
     }}
+
     dataSource={data}
     footer={
-      <div>
-        footer part
-      </div>
+      <div></div>
     }
     renderItem={image => (
-      <Image image={image} key={image.uuid} />
+      <Image
+        image={image}
+        key={image.uuid}
+      />
     )}
   />
   </div>

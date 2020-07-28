@@ -26,7 +26,7 @@ const Upload = (props) => {
   const [showUploader, setShowUploader] = useState(true);
 
   // const loggedIn = useSelector(state => state.reducers.loggedIn);
-  // const dispatch = useDispatch();  
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   fetch(process.env.REACT_APP_API + '/login/check')
@@ -60,7 +60,7 @@ const Upload = (props) => {
   }
 
   const uploadFiles = async () => {
-    
+
     setUploadProgress({});
     setUploading(true);
 
@@ -114,7 +114,7 @@ const Upload = (props) => {
         if (xhr.readyState === 4) {
           resolve(xhr.response);
         }
-      }      
+      }
 
       xhr.upload.addEventListener("error", event => {
         const copy = { ...uploadProgress };
@@ -176,12 +176,12 @@ const Upload = (props) => {
         />
         <div className="files">
           {files.map(file => {
-            
+
             let href = [process.env.REACT_APP_IMG_HOST, file.href, file.localName].join('/');
 
             return (
             <div className="row" key={file.name}>
-              
+
               {!uploadComplete && (
                 <div>
                   {file.name}, <em>{fileSize(file.size)}</em>
@@ -189,7 +189,7 @@ const Upload = (props) => {
                   {renderProgress(file)}
                 </div>
               )}
-              
+
               {file && uploadComplete && (
                 <div className="uploadedImgDiv">
                     <img alt={file.localName} src={href} /><br />
@@ -208,16 +208,16 @@ const Upload = (props) => {
         >
 
         {(!files.length > 0 || uploadComplete) && (
-        <Button 
-          type="normal" 
+        <Button
+          type="normal"
           icon={<UploadOutlined />}
           onClick={resetUploader}
         >
         Upload More Files
-        </Button>          
+        </Button>
         )}
 
-        {!uploadComplete && !uploading && ( 
+        {!uploadComplete && !uploading && (
           <Button
             className="UploadButton"
             type="primary"
