@@ -1,6 +1,9 @@
 import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
+// import { Pagination } from 'antd';
+import { Button, List } from 'antd';
+
 import Image from "./Image";
 import './Images.css'
 
@@ -44,10 +47,32 @@ const Images = (props) => {
 
   return (
     <div className="Images">
-    {data.map((image, key) =>
+    <Button
+      onClick={fetchData}
+    >
+    Refresh
+    </Button>
+    <br /><br />
+    <List
+    itemLayout="vertical"
+    pagination={{
+      onChange: page => {
+        window.scrollTo(0, 0);
+        console.log(page);
+      },
+      pageSize: 10,
+    }}
+    dataSource={data}
+    footer={
+      <div>
+        footer part
+      </div>
+    }
+    renderItem={image => (
       <Image image={image} key={image.uuid} />
     )}
-    </div>
+  />
+  </div>
   );
 };
 

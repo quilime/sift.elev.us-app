@@ -62,9 +62,7 @@ const App = (props) => {
       <div className="siteWrapper">
         <Switch>
           <Route exact path="/images" render={(props) => (
-            <Images
-              key={new Date().getTime()}
-            />
+            <Images />
           )}/>
           <Route exact path="/tags/:tag" render={(props) => (
             <Tags />

@@ -9,8 +9,6 @@ const md = require('markdown-it')({ html: true, linkify: true })
           .disable([ 'image' ])
           .use(require('markdown-it-hashtag'));
 
-const showdown = require('showdown');
-
 const Image = (props) => {
 
   const user = useSelector(state => state.reducers.user);
@@ -41,44 +39,13 @@ const Image = (props) => {
   }, [props.uuid]);
 
   const parseMarkdown = (text) => {
-    // return md.render('# markdown-it rulezz!');
+    if (!text) return '';
     return md.render( text, {
       html: false,
       xhtmlOut: true,
       breaks: true,
       linkify: true,
     });
-    // return replaceNewLines(parseHashtag(parseURL(text)));
-  }
-
-  const replaceNewLines = (text) => {
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  }
-
-  const parseURL = (text) => {
-    return text.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function( url ) {
-      return url.link( url );
-    });
-  };
-
-  const parseHashtag = (text) => {
-    return text.replace(/[#]+[A-Za-z0-9-_]+/g, (t) => {
-      var tag = t.replace("#",""); //%23
-      return t.link( '/images/tagged/' + tag );
-    });
-  };
-
-  const hashtags = (text) => {
-    return text.replace(/(^|\s)(#[a-z\d-]+)/ig, "$1<span class='hash_tag'>$2</span>");
-  }
-
-  const urlify = (text) => {
-    var urlRegex = /(https?:\/\/[^\s]+)/g;
-    // return text.replace(urlRegex, function(url) {
-      // return '<a href="' + url + '">' + url + '</a>';
-    // })
-    // or alternatively
-    return text.replace(urlRegex, '<a target="_blank" href="$1">$1</a>');
   }
 
   const fileSize = (bytes) => {
@@ -87,9 +54,19 @@ const Image = (props) => {
     return result + ' ' + (exp === 0 ? 'bytes': 'KMGTPEZY'[exp - 1] + 'B');
   }
 
-  // const del = () => {
-  //   console.log('delete image');
-  // }
+  const onDeleteImage = async () => {
+    if (window.confirm("Delete delete? It'll be gone forever.")) {
+      let res = await fetch(process.env.REACT_APP_API + '/images/' + props.uuid + "/delete",{
+        method: 'POST',
+        credentials: 'include',
+        headers: new Headers({ 'content-type': 'application/json' }),
+        body: JSON.stringify({ uuid: props.uuid })
+      });
+      let deleted = await res.json();
+      console.log(deleted);
+      props.history.push("/");
+    }
+  }
 
   const onEditImage = () => {
     setEditImage(true);
@@ -159,6 +136,14 @@ const Image = (props) => {
             </Button>
           )}
 
+          {image.uploader === user.uuid && !editImage && (
+            <Button
+              onClick={onDeleteImage}
+              type="danger"
+            >
+            Delete
+            </Button>
+          )}
 
           {image.uploader === user.uuid && editImage && (
           <Form
