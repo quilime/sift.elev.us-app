@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Button } from 'antd';
 
 // import { UploadOutlined } from '@ant-design/icons';
-
+import Loader from './Loader.js';
 import './Settings.css'
 
 const Settings = (props) => {
@@ -67,7 +67,7 @@ const Settings = (props) => {
     console.log('onFinishFailed');
   }
 
-  if (!data) return(<div>loading...</div>);
+  if (!data) return(<Loader />);
 
   return (
     <div style={{ maxWidth: "400px" }}>

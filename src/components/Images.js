@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 // import { Pagination } from 'antd';
 import { List } from 'antd';
 
+import Loader from './Loader.js';
 import Image from "./Image";
 import './Images.css'
 
@@ -48,7 +49,7 @@ const Images = (props) => {
   }
 
 
-  if (!data || !data.length) return(<div>loading...</div>);
+  if (!data || !data.length) return(<Loader />);
 
   return (
     <div className="Images">
@@ -63,8 +64,8 @@ const Images = (props) => {
         setPageSize(pageSize);
         setUrl(page);
       },
-      showSizeChanger: true,
-      showQuickJumper: true,
+      showSizeChanger: false,
+      showQuickJumper: false,
       showLessItems: false,
       pageSize: pageSize,
       size: "small",

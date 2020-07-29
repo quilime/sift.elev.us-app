@@ -29,6 +29,10 @@
   padding: 0;
 }
 
+.Image .description {
+  max-width:750px;
+
+}
 .Image .description a {
   font-weight:normal;
   color:#888 !important;

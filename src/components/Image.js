@@ -3,7 +3,11 @@ import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from "react-router-dom";
 import { Switch, Button, Input, Form } from 'antd';
 import { useSelector } from "react-redux";
+
+import Loader from './Loader.js';
+
 import './Images.css';
+
 
 const md = require('markdown-it')({ html: true, linkify: true })
           .disable([ 'image' ])
@@ -109,7 +113,7 @@ const Image = (props) => {
   }
 
 
-  if (!image) return(<div>loading...</div>);
+  if (!image) return(<Loader />);
 
   return (
     <div className="Image">

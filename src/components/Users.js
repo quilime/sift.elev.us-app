@@ -2,6 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import { withRouter } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
+import Loader from './Loader.js';
 import './Users.css'
 
 const Users = (props) => {
@@ -36,14 +37,14 @@ const Users = (props) => {
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-  if (!data || !data.length) return(<div>loading...</div>);
+  if (!data || !data.length) return(<Loader />);
   // if (!users || !users.length) return(null);
 
   return (
     <div className="Users">
     {data.map((user, key) =>
       <div className="User" key={key}>
-        <a href={`/images/${user.username}`}>{user.username}</a>
+        <a className="strong" href={`/images/${user.username}`}>{user.username}</a>
       </div>
     )}
     </div>
