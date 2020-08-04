@@ -1,40 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { NavLink, useLocation, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { NavLink, withRouter } from "react-router-dom";
 
-const Wrapper = styled.div `
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:150px;
-  z-index:1000;
-  background:#fff;
-  padding:0.5em;
-  padding-bottom:1em;
-  a { 
-    color:#000;
-    display: block;
-    margin:1em;
-    padding:0.25em;
-    font-weight:bold;
-    border-bottom: 3px solid #ddd;
+const Nav = (props) => {
 
-    &:hover {
-      border-bottom: 3px solid #aaa;
-    }
+  // const location = useLocation();
 
-    &.active {
-      border-bottom: 3px solid #000;
-    }
-  }  
-`;
+  // const SortingDiv = styled.div `
+  //   background:#00f;
+  //   margin-left:2em;
+  // `;
 
-const Nav = ({ setModalEvent }) => (
-  <Wrapper>
-    <NavLink to={`/`} exact>Aggregate</NavLink>
-    <NavLink to={`/upload`} exact>Upload</NavLink>
-    <NavLink to={`/login`} exact>Login</NavLink>
-  </Wrapper>
-);
+  // useEffect(() => {
+
+  //   console.log('effect', props.history);
+
+  // }, [props.history]);
+
+  // console.log('hist', props.history.location.pathname);
+
+  // console.log('loc', location);
+
+  return(
+    <div id="nav">
+      <NavLink to={`/images`} exact>Images</NavLink>
+      <NavLink to={`/upload`} exact>Upload</NavLink>
+      <NavLink to={`/users`} exact>Users</NavLink>
+      <NavLink to={`/settings`} exact>Settings</NavLink>
+    </div>
+  );
+};
 
 export default withRouter(Nav);

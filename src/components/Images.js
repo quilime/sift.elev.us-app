@@ -1,8 +1,10 @@
 import React, { useState, useEffect  }  from 'react';
 import { withRouter } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { Pagination } from 'antd';
-import { List } from 'antd';
+// import { AppstoreOutlined, TableOutlined } from '@ant-design/icons';
+import { List, Radio } from 'antd';
+import styled from "styled-components";
 
 import Loader from './Loader.js';
 import Image from "./Image";
@@ -20,12 +22,17 @@ const filterData = data => {
   });
 }
 
+
 const Images = (props) => {
 
   const url = props.url;
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(props.page);
   const [pageSize, setPageSize] = useState(10);
+
+  const dispatch = useDispatch();
+
+  const imageViewSize = useSelector(state => state.reducers.imageViewSize);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,18 +50,28 @@ const Images = (props) => {
     fetchData();
   }, [url]);
 
+  const onViewChange = e => {
+    dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: e.target.value });
+  };
+
 
   const setUrl = (page) => {
     props.history.push("/images/page/" + page);
-  }
+  };
 
 
   if (!data || !data.length) return(<Loader />);
 
   return (
-    <div className="Images">
+    <div className={`Images ${imageViewSize}`}>
+    <div className="View">
+      View&nbsp;
+      <Radio.Group defaultValue={imageViewSize} size="small" onChange={onViewChange}>
+        <Radio.Button value="large">Large</Radio.Button>
+        <Radio.Button value="compact">Compact</Radio.Button>
+      </Radio.Group>
+    </div>
     <List
-    itemLayout="vertical"
     pagination={{
       total: data.length,
       showTotal: (total, range) => `${range[0]}—${range[1]} of ${total}`, //total => `${total} images`,
@@ -72,7 +89,6 @@ const Images = (props) => {
       defaultCurrent: 1,
       current: pageNumber
     }}
-
     dataSource={data}
     footer={
       <div></div>

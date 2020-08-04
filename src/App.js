@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
 import "antd/dist/antd.css";
 
+import Nav from "./components/Nav";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Upload from "./components/Upload";
@@ -12,6 +13,8 @@ import Images from "./components/Images";
 import Image from "./components/Image";
 import Users from "./components/Users";
 import Tags from "./components/Tags";
+
+
 
 const App = (props) => {
 
@@ -37,7 +40,7 @@ const App = (props) => {
 
   if (!user) {
     return (
-      <Router>
+      <BrowserRouter>
         <div className="siteWrapper">
           <Switch>
             <Route exact path="/" render={(props) => (
@@ -48,19 +51,14 @@ const App = (props) => {
             )} />
           </Switch>
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 
   return (
-    <Router>
-      <div id="nav">
-        <NavLink to={`/images`} exact>Images</NavLink>
-        <NavLink to={`/upload`} exact>Upload</NavLink>
-        <NavLink to={`/users`} exact>Users</NavLink>
-        <NavLink to={`/settings`} exact>Settings</NavLink>
-      </div>
+    <BrowserRouter>
       <div className="siteWrapper">
+        <Nav />
         <Switch>
           <Route exact path="/images"  render={(props) => (
             <Images
@@ -103,7 +101,7 @@ const App = (props) => {
           )} />
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

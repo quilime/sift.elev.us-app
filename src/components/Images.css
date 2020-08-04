@@ -1,6 +1,30 @@
 .Images {
+  margin-right:200px;
+}
+
+.Images.compact ul:first-child {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.Images.large .Image {
   max-width:800px;
 }
+
+.Images.compact .Image {
+  width:200px;
+  flex-grow: 4;
+  margin:0 3em 3em 0;
+}
+
+
+.Images .View {
+  position:fixed;
+  right:1em;
+  top:1em;
+  z-index:1;
+}
+
 
 .Image {
   margin-bottom:3em;
