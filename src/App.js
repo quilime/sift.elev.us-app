@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -13,13 +13,16 @@ import Images from "./components/Images";
 import Image from "./components/Image";
 import Users from "./components/Users";
 import Tags from "./components/Tags";
-
-
+import Dropzone from "./components/Dropzone2";
 
 const App = (props) => {
 
-  const user = useSelector(state => state.reducers.user);
+  const user = useSelector(state => state.reducers.user)
   const dispatch = useDispatch();
+
+  const onFilesAdded = f => {
+    console.log('files added', f);
+  };
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API + '/login', {
@@ -57,6 +60,7 @@ const App = (props) => {
 
   return (
     <BrowserRouter>
+      <Dropzone onFilesAdded={onFilesAdded} />
       <div className="siteWrapper">
         <Nav />
         <Switch>

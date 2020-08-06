@@ -17,15 +17,15 @@ const DropzoneElem = styled.div `
   justify-content: center;
   height:100%;
   width:100%;
-`;    
+`;
 
 class Dropzone extends Component {
   constructor(props) {
     super(props);
-    
-    this.state = { 
-      hightlight: false, 
-      visible: true 
+
+    this.state = {
+      hightlight: false,
+      visible: true
     };
 
     this.fileInputRef = React.createRef();
@@ -52,7 +52,7 @@ class Dropzone extends Component {
 
   onDragOver(event) {
     event.preventDefault();
-    if (this.props.disabed) return;
+    if (this.props.disabled) return;
     this.setState({ hightlight: true });
   }
 
@@ -77,7 +77,7 @@ class Dropzone extends Component {
       array.push(list.item(i));
     }
     return array;
-  }  
+  }
 
   render() {
 
@@ -87,11 +87,11 @@ class Dropzone extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onClick={this.openFileDialog}
-        style={{ 
-          cursor : this.props.disabled ? "default" : "pointer", 
+        style={{
+          cursor : this.props.disabled ? "default" : "pointer",
           display : this.props.showUploader ? "" : "none",
           backgroundColor : this.state.hightlight ? "rgb(180, 180, 180)" : ""
-        }} 
+        }}
       >
         <input
           ref={this.fileInputRef}
@@ -106,7 +106,7 @@ class Dropzone extends Component {
         </Title>
       </DropzoneElem>
     );
-  }  
+  }
 }
 
 

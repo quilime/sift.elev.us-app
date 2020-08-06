@@ -1,38 +1,43 @@
 TODO
 --
 
-- delete images
-
 - upload just keep dragging into
   - drag anywhere to upload
-
-- pagination
 
 - add image to your own feed
   - view people who have added it to their feed
 
-- website feedback
-
-- check for dupe images
-- sift ai that can check images
-
-- "fav" image to your feed
+- "save" image to your feed
 
 - tags
   - filter by tags
 - mark image for delete
 - gallery views
 
+
 - image gallery idea -- small groups of images
 - image "mood" (category?)
 - images are defaultly private to the uploader and not visible on the main feed
-
 - mood description (text, and or groups of image)
 
 - include links
 
 
+
+DONE
+--
+- delete images
+- pagination
 - description field on images
 
+
+IDEAS
+--
+- check for dupe images
+- sift ai that can check images
+
+
+NOTES
+--
 - https://ant.design/components/mentions/
 - https://ant.design/components/select/

@@ -10,6 +10,7 @@ import Loader from './Loader.js';
 import Image from "./Image";
 import './Images.css'
 
+
 const filterData = data => {
   return data.map((image, i) => {
     return {
@@ -34,6 +35,7 @@ const Images = (props) => {
 
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
 
+
   useEffect(() => {
     const fetchData = async () => {
       let res = await fetch(url, {
@@ -49,6 +51,7 @@ const Images = (props) => {
     }
     fetchData();
   }, [url]);
+
 
   const onViewChange = e => {
     dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: e.target.value });
