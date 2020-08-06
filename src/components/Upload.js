@@ -1,5 +1,5 @@
 //TODO: error check files that are wrong type and didn't uploaddf
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { /*useSelector, useDispatch*/ } from "react-redux";
 import { Button } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
@@ -46,6 +46,23 @@ const Upload = (props) => {
   // };
 
   // const prevFilesRef = usePrevious(files);
+
+  useEffect(() => {
+    const files = fileListToArray(props.droppedFiles);
+    console.log('errfffect', );
+    if (files.length > 0) {
+      console.log('do somethin with the uploaded files', files);
+      onFilesAdded(files);
+    }
+  }, [props.droppedFiles]);
+
+  const fileListToArray = (fileList) => {
+    const array = [];
+    for (var i = 0; i < fileList.length; i++) {
+      array.push(fileList.item(i));
+    }
+    return array;
+  }
 
   const resetUploader = () => {
     setFiles([]);
@@ -165,15 +182,17 @@ const Upload = (props) => {
       }
       return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
   }
-
-  return (
-    <div className="upload">
-      <div className="content">
+/*
         <Dropzone
           showUploader={showUploader}
           onFilesAdded={onFilesAdded}
           disabled={uploading || uploadComplete}
         />
+*/
+
+  return (
+    <div className="upload">
+      <div className="content">
         <div className="files">
           {files.map(file => {
 

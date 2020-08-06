@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react';
+import { withRouter } from "react-router-dom";
 import { UploadOutlined } from '@ant-design/icons';
 
 import './Dropzone.css';
@@ -7,6 +8,8 @@ const Dropzone2 = (props) => {
 
   const [dragOver, setDragOver] = useState(false);
   const [dropped, setDropped] = useState(false);
+
+  const fileInputRef = React.createRef();
 
   const onDragOver = event => {
     event.preventDefault();
@@ -26,22 +29,14 @@ const Dropzone2 = (props) => {
     console.log('drop', event.target);
     event.preventDefault();
     setDropped(true);
+    setDragOver(false);
     const files = event.dataTransfer.files;
     props.onFilesAdded(files);
+    props.history.push("/upload");
   }
 
   useEffect(() => {
-
-    // console.log('attach events');
-
-    // ${dragOver && ("over")}
-
-    // window.removeEventListener("dragenter", handleDragEnter, true);
     window.addEventListener("dragenter", onDragOver, true);
-    // window.removeEventListener("dragleave", handleDragLeave, true);
-    // window.addEventListener("dragleave", onDragLeave, true);
-    // window.removeEventListener("drop", handleDrop, true);
-    // window.addEventListener("drop", onDrop, true);
   }, []);
 
   return(
@@ -51,6 +46,13 @@ const Dropzone2 = (props) => {
       onDragLeave={onDragLeave}
       onDrop={onDrop}
       >
+        <input
+          ref={fileInputRef}
+          className="FileInput"
+          type="file"
+          multiple
+          style={{ display: "none" }}
+        />
       <div className="Title">
         <div>{dropped ? "Dropped" : "Drop files here"}</div>
         <UploadOutlined /> Upload jpg, png, or gifs
@@ -60,4 +62,4 @@ const Dropzone2 = (props) => {
 
 };
 
-export default Dropzone2;
+export default withRouter(Dropzone2);

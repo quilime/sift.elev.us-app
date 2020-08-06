@@ -20,7 +20,10 @@ const App = (props) => {
   const user = useSelector(state => state.reducers.user)
   const dispatch = useDispatch();
 
+  const [droppedFiles, setDroppedFiles] = useState([]);
+
   const onFilesAdded = f => {
+    setDroppedFiles(f);
     console.log('files added', f);
   };
 
@@ -98,7 +101,9 @@ const App = (props) => {
             />
           )}/>
           <Route exact path="/upload" render={(props) => (
-            <Upload />
+            <Upload
+              droppedFiles={droppedFiles}
+            />
           )}/>
           <Route exact path="/settings" render={(props) => (
             <Settings />
