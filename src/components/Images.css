@@ -65,3 +65,10 @@
 
 .Image .hash_tag {
 }
+
+.nonLoggedInImage {
+  position:absolute;
+  top:1em;
+  left:1em;
+  max-width:90%;
+}

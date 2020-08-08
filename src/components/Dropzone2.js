@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import { withRouter } from "react-router-dom";
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -16,17 +16,17 @@ const Dropzone2 = (props) => {
     setDropped(false);
     if (!dragOver) {
       setDragOver(true);
-      console.log('on drag over', event.target);
+      // console.log('on drag over', event.target);
     }
   };
 
   const onDragLeave = event => {
-    console.log('drag leave', event);
+    // console.log('drag leave', event);
     setDragOver(false);
   };
 
   const onDrop = event => {
-    console.log('drop', event.target);
+    // console.log('drop', event.target);
     event.preventDefault();
     setDropped(true);
     setDragOver(false);
@@ -35,9 +35,7 @@ const Dropzone2 = (props) => {
     props.history.push("/upload");
   }
 
-  useEffect(() => {
-    window.addEventListener("dragenter", onDragOver, true);
-  }, []);
+  window.addEventListener("dragenter", onDragOver, true);
 
   return(
     <div
@@ -54,8 +52,8 @@ const Dropzone2 = (props) => {
           style={{ display: "none" }}
         />
       <div className="Title">
-        <div>{dropped ? "Dropped" : "Drop files here"}</div>
-        <UploadOutlined /> Upload jpg, png, or gifs
+        <div>{dropped ? "Dropped" : "Drop files here to"}</div>
+        <UploadOutlined /> upload jpg, png, or gifs
       </div>
     </div>
   );

@@ -35,9 +35,10 @@ const Image = (props) => {
         })
         .then(res => res.json())
         .then(image => {
+          console.log('image', image);
           image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`
           setImage(image);
-          setDescriptionHTML(parseMarkdown(image.description));
+          // setDescriptionHTML(parseMarkdown(image.description));
         });
     }
   }, [props.uuid]);
@@ -117,12 +118,16 @@ const Image = (props) => {
 
   return (
     <div className="Image">
+      <div className={!user ? "nonLoggedInImage" : ""}>
       <a href={`/image/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
       </a>
+      </div>
+      {user && (
       <p>
-        via <a className="strong" href={`/images/${image.username}`}>{image.username}</a>
+      via <a className="strong" href={`/images/${image.username}`}>{image.username}</a>
       </p>
+      )}
       {props.edit && (
         <div className="edit">
 
@@ -187,6 +192,7 @@ const Image = (props) => {
           </div>
         </div>
         )}
+
     </div>
   );
 };

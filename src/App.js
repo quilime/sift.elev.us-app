@@ -28,16 +28,25 @@ const App = (props) => {
   };
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API + '/login', {
-      headers: new Headers({ 'content-type': 'application/json' }),
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(result => {
-        dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const getUser = async () => {
+      const data = await fetch(process.env.REACT_APP_API + '/login', {
+        headers: new Headers({ 'content-type': 'application/json' }),
+        credentials: 'include'
+      });
+      const result = await data.json();
+      dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
+    }
+    getUser();
+  //   fetch(process.env.REACT_APP_API + '/login', {
+  //     headers: new Headers({ 'content-type': 'application/json' }),
+  //     credentials: 'include'
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
+  //     })
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
 
   if (typeof user === "undefined") {
@@ -55,6 +64,17 @@ const App = (props) => {
             <Route exact path="/login" render={(props) => (
               <Login />
             )} />
+            <Route exact path="/image/:uuid" render={(props) => (
+              <Image
+                edit={false}
+                uuid={props.match.params.uuid}
+              />
+            )}/>
+          <Route exact path="/images/:username" render={(props) => (
+            <Images
+            url={(process.env.REACT_APP_API + '/images/uploadedby/' + props.match.params.username)}
+            />
+          )}/>
           </Switch>
         </div>
       </BrowserRouter>

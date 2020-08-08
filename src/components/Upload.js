@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import Dropzone from "./Dropzone";
 import ProgressBar from "./ProgressBar";
+import Image from "./Image";
 
 import './Upload.css';
 
@@ -49,9 +50,8 @@ const Upload = (props) => {
 
   useEffect(() => {
     const files = fileListToArray(props.droppedFiles);
-    console.log('errfffect', );
     if (files.length > 0) {
-      console.log('do somethin with the uploaded files', files);
+      // console.log('do somethin with the uploaded files', files);
       onFilesAdded(files);
     }
   }, [props.droppedFiles]);
@@ -183,20 +183,21 @@ const Upload = (props) => {
       return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
   }
 /*
-        <Dropzone
-          showUploader={showUploader}
-          onFilesAdded={onFilesAdded}
-          disabled={uploading || uploadComplete}
-        />
+
 */
 
   return (
     <div className="upload">
+            <Dropzone
+          showUploader={showUploader}
+          onFilesAdded={onFilesAdded}
+          disabled={uploading || uploadComplete}
+        />
       <div className="content">
         <div className="files">
           {files.map(file => {
 
-            let href = [process.env.REACT_APP_IMG_HOST, file.href, file.localName].join('/');
+            // let href = [process.env.REACT_APP_IMG_HOST, file.href, file.localName].join('/');
 
             return (
             <div className="row" key={file.name}>
@@ -211,8 +212,10 @@ const Upload = (props) => {
 
               {file && uploadComplete && (
                 <div className="uploadedImgDiv">
-                    <img alt={file.localName} src={href} /><br />
-                    <em>{file.type}, {file.dims.width}x{file.dims.height}, {fileSize(file.size)}</em>
+                  <Image
+                    uuid={file.uuid}
+                    edit={false}
+                  />
                 </div>
               )}
 

@@ -102,7 +102,8 @@ class Dropzone extends Component {
           style={{ display: "none" }}
         />
         <Title>
-          <UploadOutlined /> Upload jpg, png, or gifs
+          Click or drop files here to<br/>
+          <UploadOutlined /> upload jpg, png, or gifs
         </Title>
       </DropzoneElem>
     );

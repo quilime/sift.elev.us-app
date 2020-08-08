@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { Pagination } from 'antd';
 // import { AppstoreOutlined, TableOutlined } from '@ant-design/icons';
 import { List, Radio } from 'antd';
-import styled from "styled-components";
+//import styled from "styled-components";
 
 import Loader from './Loader.js';
 import Image from "./Image";
@@ -26,7 +26,6 @@ const filterData = data => {
 
 const Images = (props) => {
 
-  const url = props.url;
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(props.page);
   const [pageSize, setPageSize] = useState(10);
@@ -37,8 +36,9 @@ const Images = (props) => {
 
 
   useEffect(() => {
+
     const fetchData = async () => {
-      let res = await fetch(url, {
+      let res = await fetch(props.url, {
         credentials: 'include',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -50,7 +50,8 @@ const Images = (props) => {
       setData(filterData(json));
     }
     fetchData();
-  }, [url]);
+
+  }, [props.url]);
 
 
   const onViewChange = e => {
