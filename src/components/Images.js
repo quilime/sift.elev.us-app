@@ -11,7 +11,7 @@ import Image from "./Image";
 import './Images.css'
 
 
-const filterData = data => {
+const mapData = data => {
   return data.map((image, i) => {
     return {
       src: `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`,
@@ -26,7 +26,7 @@ const filterData = data => {
 
 const Images = (props) => {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [pageNumber, setPageNumber] = useState(props.page);
   const [pageSize, setPageSize] = useState(10);
 
@@ -47,7 +47,9 @@ const Images = (props) => {
         }
       });
       const json = await res.json();
-      setData(filterData(json));
+      if (json.length) {
+        setData(mapData(json));
+      }
     }
     fetchData();
 
@@ -60,11 +62,13 @@ const Images = (props) => {
 
 
   const setUrl = (page) => {
-    props.history.push("/images/page/" + page);
+    props.history.push("/page/" + page);
   };
 
 
-  if (!data || !data.length) return(<Loader />);
+  if (!data) return(<Loader />);
+
+  if (data.length === 0) return(<div>No Images Found</div>);
 
   return (
     <div className={`Images ${imageViewSize}`}>

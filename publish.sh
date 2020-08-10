@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # delete static folder
-# ssh sift@elev.us "cd sift.elev.us/public/ && rm -rf static"
+ssh sift@elev.us "cd sift.elev.us/public/ && rm -rf precache-*"
 
 # sync new build
-rsync -var --delete --exclude ".DS_Store" --exclude "static" ./build/ sift@elev.us:sift.elev.us/public/
+rsync -var --exclude "static/sift" --exclude ".DS_Store" ./build/ sift@elev.us:sift.elev.us/public/

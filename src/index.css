@@ -13,7 +13,6 @@ code {
 
 #nav a, a.strong {
   color:#666 !important;
-  background:#eee;
   display: inline-block;
   font-weight:bold;
   border-bottom: 2px solid #999;

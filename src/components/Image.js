@@ -119,13 +119,13 @@ const Image = (props) => {
   return (
     <div className="Image">
       <div className={!user ? "nonLoggedInImage" : ""}>
-      <a href={`/image/${image.uuid}`}>
+      <a href={`/i/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
       </a>
       </div>
       {user && (
       <p>
-      via <a className="strong" href={`/images/${image.username}`}>{image.username}</a>
+      via <a className="strong" href={`/u/${image.username}`}>{image.username}</a>
       </p>
       )}
       {props.edit && (
@@ -179,7 +179,7 @@ const Image = (props) => {
             <Switch size="small" onChange={(checked, event) => { setShowMeta(checked) }} />
             {showMeta && (
               <ul>
-                <li>Uploaded By: <a className="strong" href={`/images/${image.username}`}>{image.username}</a></li>
+                <li>Uploaded By: <a className="strong" href={`/u/${image.username}`}>{image.username}</a></li>
                 <li>Upload Date: {formatDate(image.createdAt)}</li>
                 <li>Updated At: {formatDate(image.updatedAt)}</li>
                 <li>Size: {fileSize(image.size)}</li>

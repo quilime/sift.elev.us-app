@@ -22,7 +22,7 @@ const Login = (props) => {
         if (result.error) throw result.error;
         console.log(result);
         dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-        // props.history.push("/");
+        props.history.push("/");
       })
       .catch(err => console.error(err));
   };

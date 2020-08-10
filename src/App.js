@@ -28,25 +28,26 @@ const App = (props) => {
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      const data = await fetch(process.env.REACT_APP_API + '/login', {
-        headers: new Headers({ 'content-type': 'application/json' }),
-        credentials: 'include'
-      });
-      const result = await data.json();
-      dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-    }
-    getUser();
-  //   fetch(process.env.REACT_APP_API + '/login', {
-  //     headers: new Headers({ 'content-type': 'application/json' }),
-  //     credentials: 'include'
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
-  //     })
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+    // const getUser = async () => {
+    //   const data = await fetch(process.env.REACT_APP_API + '/login', {
+    //     headers: new Headers({ 'content-type': 'application/json' }),
+    //     credentials: 'include'
+    //   });
+    //   const result = await data.json();
+    //   console.log(result);
+    //   // dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
+    // }
+    // getUser();
+    fetch(process.env.REACT_APP_API + '/login', {
+      headers: new Headers({ 'content-type': 'application/json' }),
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(result => {
+        dispatch({ type: 'SET_USER', user: typeof result.user === "undefined" ? null : result.user });
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   if (typeof user === "undefined") {
@@ -64,17 +65,12 @@ const App = (props) => {
             <Route exact path="/login" render={(props) => (
               <Login />
             )} />
-            <Route exact path="/image/:uuid" render={(props) => (
+            <Route exact path="/i/:uuid" render={(props) => (
               <Image
                 edit={false}
                 uuid={props.match.params.uuid}
               />
             )}/>
-          <Route exact path="/images/:username" render={(props) => (
-            <Images
-            url={(process.env.REACT_APP_API + '/images/uploadedby/' + props.match.params.username)}
-            />
-          )}/>
           </Switch>
         </div>
       </BrowserRouter>
@@ -87,7 +83,7 @@ const App = (props) => {
       <div className="siteWrapper">
         <Nav />
         <Switch>
-          <Route exact path="/images"  render={(props) => (
+          <Route exact path="/"  render={(props) => (
             <Images
               url={(process.env.REACT_APP_API + '/images')}
               page={1}
@@ -95,7 +91,7 @@ const App = (props) => {
               reload={true}
             />
           )}/>
-          <Route exact path="/images/page/:page"  render={(props) => (
+          <Route exact path="/page/:page"  render={(props) => (
             <Images
               url={(process.env.REACT_APP_API + '/images')}
               page={props.match.params.page}
@@ -104,12 +100,12 @@ const App = (props) => {
           <Route exact path="/tags/:tag" render={(props) => (
             <Tags />
           )}/>
-          <Route exact path="/images/:username" render={(props) => (
+          <Route exact path="/u/:username" render={(props) => (
             <Images
             url={(process.env.REACT_APP_API + '/images/uploadedby/' + props.match.params.username)}
             />
           )}/>
-          <Route exact path="/image/:uuid" render={(props) => (
+          <Route exact path="/i/:uuid" render={(props) => (
             <Image
               edit={true}
               uuid={props.match.params.uuid}
