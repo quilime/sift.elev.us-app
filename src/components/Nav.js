@@ -6,9 +6,9 @@ const Nav = (props) => {
   return(
     <div id="nav">
       <NavLink to={`/`} exact>S I F T</NavLink>
-      <NavLink to={`/upload`} exact>Upload</NavLink>
-      <NavLink to={`/users`} exact>Users</NavLink>
-      <NavLink to={`/settings`} exact>Settings</NavLink>
+      <NavLink to={`/upload`} exact>upload</NavLink>
+      <NavLink to={`/users`} exact>users</NavLink>
+      <NavLink to={`/settings`} exact>settings</NavLink>
     </div>
   );
 };

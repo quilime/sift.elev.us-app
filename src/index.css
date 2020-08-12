@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto medium", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,15 +11,30 @@ code {
     monospace;
 }
 
+a {
+  font-family: 'Work Sans', sans-serif;
+
+  font-weight:normal;
+  color:#888 !important;
+  border:0;
+  text-decoration:none;
+  background:none !important;
+  border-bottom: 2px solid #ddd;
+}
+
+#nav a:first-child {
+  margin-top:0.5em;
+  letter-spacing: 0.5em;
+}
+
 #nav a, a.strong {
   color:#666 !important;
   display: inline-block;
   font-weight:bold;
-  border-bottom: 2px solid #999;
+  border-bottom: 2px solid #ddd;
 }
 #nav a {
-  margin:1em;
-  padding:0.25em;
+  margin:2em 1em;
   display:block;
 }
 #nav a.active, a.active {
