@@ -38,7 +38,9 @@ const Image = (props) => {
           console.log('image', image);
           image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`
           setImage(image);
-          // setDescriptionHTML(parseMarkdown(image.description));
+          if (image.description) {
+            setDescriptionHTML(parseMarkdown(image.description));
+          }
         });
     }
   }, [props.uuid]);

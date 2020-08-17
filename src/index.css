@@ -13,7 +13,6 @@ code {
 
 a {
   font-family: 'Work Sans', sans-serif;
-
   font-weight:normal;
   color:#888 !important;
   border:0;
@@ -22,39 +21,18 @@ a {
   border-bottom: 2px solid #ddd;
 }
 
-#nav a:first-child {
-  margin-top:0.5em;
-  letter-spacing: 0.5em;
-}
-
-#nav a, a.strong {
-  color:#666 !important;
-  display: inline-block;
-  font-weight:bold;
-  border-bottom: 2px solid #ddd;
-}
-#nav a {
-  margin:2em 1em;
-  display:block;
-}
-#nav a.active, a.active {
-  border-bottom: 3px solid #000 !important;
-}
-#nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:150px;
-  z-index:1000;
-  padding:0.5em;
-  padding-bottom:1em;
-}
-
 
 
 .siteWrapper {
   padding:1em 3em 3em 3em;
   margin-left:150px;
+}
+
+
+@media (max-width: 600px) {
+  .siteWrapper {
+    margin-left:1.5em;
+  }
 }
 
 

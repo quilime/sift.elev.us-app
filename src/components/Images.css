@@ -2,17 +2,26 @@
   margin-right:200px;
 }
 
+@media (max-width: 600px) {
+  .Images {
+    margin-right:1em;
+  }
+}
+
 .Images.compact ul:first-child {
   display:flex;
   flex-wrap: wrap;
 }
 
 .Images img {
-  max-height:600px;
+  max-height:300px;
+  min-height:100px;
+  min-width:100px;
 }
 
 .Images.large .Image {
   max-width:800px;
+  min-width:100px;
 }
 
 .Images.compact .Image {
@@ -26,6 +35,14 @@
   right:1em;
   top:1em;
   z-index:1;
+  background:#fff;
+  padding:3px;
+}
+
+@media (max-width: 600px) {
+  .Images .View {
+    display:none;
+  }
 }
 
 .Image {
@@ -56,7 +73,6 @@
 
 }
 
-
 .Image .hash_tag {
 }
 
@@ -66,3 +82,4 @@
   left:1em;
   max-width:90%;
 }
+
