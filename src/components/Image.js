@@ -35,7 +35,7 @@ const Image = (props) => {
         })
         .then(res => res.json())
         .then(image => {
-          console.log('image', image);
+          // console.log('image', image);
           image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`
           setImage(image);
           if (image.description) {
