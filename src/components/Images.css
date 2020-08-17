@@ -2,9 +2,13 @@
 
 }
 
+.Images .large {
+
+}
+
 @media (max-width: 600px) {
   .Images {
-    margin-right:1em;
+    margin-right:3em;
   }
 }
 
