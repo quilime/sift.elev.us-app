@@ -1,5 +1,5 @@
 .Images {
-  margin-right:200px;
+
 }
 
 @media (max-width: 600px) {
@@ -14,7 +14,7 @@
 }
 
 .Images.compact img {
-  max-height:400px;
+  max-height:300px;
 }
 
 .Images img {
@@ -30,14 +30,14 @@
 
 .Images.compact .Image {
   width:200px;
-  flex-grow: 4;
+
   margin:0 3em 3em 0;
 }
 
 .Images .View {
   position:fixed;
   right:1em;
-  top:1em;
+  top:200px;
   z-index:1;
   background:#fff;
   padding:3px;
@@ -86,4 +86,3 @@
   left:1em;
   max-width:90%;
 }
-

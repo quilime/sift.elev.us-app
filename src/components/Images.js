@@ -70,13 +70,19 @@ const Images = (props) => {
 
   if (data.length === 0) return(<div>No Images Found</div>);
 
+  const radioStyle = {
+    display: 'block',
+    height: '30px',
+    lineHeight: '30px',
+  };
+
   return (
     <div className={`Images ${imageViewSize}`}>
     <div className="View">
-      View&nbsp;
+      View<br />
       <Radio.Group defaultValue={imageViewSize} size="small" onChange={onViewChange}>
-        <Radio.Button value="large">Large</Radio.Button>
-        <Radio.Button value="compact">Compact</Radio.Button>
+        <Radio style={radioStyle} value="large">Large</Radio>
+        <Radio style={radioStyle} value="compact">Compact</Radio>
       </Radio.Group>
     </div>
     <List

@@ -10,7 +10,7 @@ const ResponsiveMenu = styled.div`
   height: 2rem;
   position: fixed;
   top: 15px;
-  left: 15px;
+  right: 15px;
   z-index: 20;
 
 
@@ -28,12 +28,12 @@ const ResponsiveMenu = styled.div`
   ul {
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     width:150px;
     z-index:1000;
     padding:0.5em;
     padding-bottom:1em;
-background:#fff;
+    background:#fff;
 
 
     @media (max-width: 600px) {

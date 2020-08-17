@@ -17,24 +17,20 @@ a {
   color:#888 !important;
   border:0;
   text-decoration:none;
-  background:none !important;
+  background:none;
   border-bottom: 2px solid #ddd;
 }
 
-
-
 .siteWrapper {
-  padding:1em 3em 3em 3em;
-  margin-left:150px;
+  padding:1em 0 3em 3em;
+  margin-right:160px;
 }
-
 
 @media (max-width: 600px) {
   .siteWrapper {
-    margin-left:1.5em;
+    margin-right:1.5em;
   }
 }
-
 
 .tag {
 }
