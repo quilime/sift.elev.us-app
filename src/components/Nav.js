@@ -13,6 +13,8 @@ const ResponsiveMenu = styled.div`
   left: 15px;
   z-index: 20;
 
+
+
   & .anticon-menu {
       display:none;
   }
@@ -31,6 +33,8 @@ const ResponsiveMenu = styled.div`
     z-index:1000;
     padding:0.5em;
     padding-bottom:1em;
+background:#fff;
+
 
     @media (max-width: 600px) {
       display: ${({ open }) => open ? 'block' : 'none'};
