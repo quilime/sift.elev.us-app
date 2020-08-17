@@ -13,8 +13,12 @@
   flex-wrap: wrap;
 }
 
+.Images.compact img {
+  max-height:400px;
+}
+
 .Images img {
-  max-height:300px;
+  max-height:750px;
   min-height:100px;
   min-width:100px;
 }
