@@ -74,6 +74,7 @@ const App = (props) => {
           </Switch>
         </div>
       </BrowserRouter>
+
     );
   }
 

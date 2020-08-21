@@ -3,6 +3,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from "react-router-dom";
 import { Switch, Button, Input, Form } from 'antd';
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import Loader from './Loader.js';
 
@@ -120,6 +121,10 @@ const Image = (props) => {
 
   return (
     <div className="Image">
+      <Helmet>
+        <meta property="og:title" content="S I F T" />
+        <meta property="og:image" content={image.src} />
+      </Helmet>
       <div className={!user ? "nonLoggedInImage" : ""}>
       <a href={`/i/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
