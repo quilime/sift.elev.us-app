@@ -22,15 +22,6 @@ a {
 }
 
 .siteWrapper {
-  padding:1em 0 3em 3em;
-  margin-right:160px;
+  padding:1em 0 3em 4.3em;
 }
 
-@media (max-width: 600px) {
-  .siteWrapper {
-    margin-right:1.5em;
-  }
-}
-
-.tag {
-}

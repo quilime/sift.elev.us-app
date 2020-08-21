@@ -1,9 +1,9 @@
 import React, { useState, useEffect  }  from 'react';
 import { withRouter } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import { Pagination } from 'antd';
 // import { AppstoreOutlined, TableOutlined } from '@ant-design/icons';
-import { List, Radio } from 'antd';
+import { List } from 'antd';
 //import styled from "styled-components";
 
 import Loader from './Loader.js';
@@ -30,8 +30,6 @@ const Images = (props) => {
   const [pageNumber, setPageNumber] = useState(props.page);
   const [pageSize, setPageSize] = useState(10);
 
-  const dispatch = useDispatch();
-
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
 
 
@@ -56,11 +54,6 @@ const Images = (props) => {
   }, [props.url]);
 
 
-  const onViewChange = e => {
-    dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: e.target.value });
-  };
-
-
   const setUrl = (page) => {
     props.history.push("/page/" + page);
   };
@@ -70,21 +63,8 @@ const Images = (props) => {
 
   if (data.length === 0) return(<div>No Images Found</div>);
 
-  const radioStyle = {
-    display: 'block',
-    height: '30px',
-    lineHeight: '30px',
-  };
-
   return (
     <div className={`Images ${imageViewSize}`}>
-    <div className="View">
-      View<br />
-      <Radio.Group defaultValue={imageViewSize} size="small" onChange={onViewChange}>
-        <Radio style={radioStyle} value="large">Large</Radio>
-        <Radio style={radioStyle} value="compact">Compact</Radio>
-      </Radio.Group>
-    </div>
     <List
     pagination={{
       total: data.length,

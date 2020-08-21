@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink, withRouter } from "react-router-dom";
 import styled from 'styled-components';
-
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Radio } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
 
@@ -10,35 +11,33 @@ const ResponsiveMenu = styled.div`
   height: 2rem;
   position: fixed;
   top: 15px;
-  right: 15px;
+  left: 15px;
   z-index: 20;
-
-
 
   & .anticon-menu {
       display:none;
   }
 
-  @media (max-width: 600px) {
-    .anticon-menu {
-      display: ${({ open }) => open ? 'none' : 'block'};
-    }
+  .anticon-menu {
+    display: ${({ open }) => open ? 'none' : 'block'};
+  }
+
+  & .nav {
+    display: ${({ open }) => open ? 'block' : 'none'};
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:150px;
+    z-index:1000;
+    background:#fff;
+    padding:0.5em;
   }
 
   ul {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width:150px;
-    z-index:1000;
-    padding:0.5em;
+    padding:0;
+    margin:0;
     padding-bottom:1em;
-    background:#fff;
 
-
-    @media (max-width: 600px) {
-      display: ${({ open }) => open ? 'block' : 'none'};
-    }
 
     & a:first-child {
       margin-top:0.5em;
@@ -50,7 +49,7 @@ const ResponsiveMenu = styled.div`
       border-bottom: 2px solid #ddd;
     }
     & a {
-      margin:2em 1em;
+      margin:2em 0;
       display:block;
     }
     & a.active, a.active {
@@ -61,9 +60,32 @@ const ResponsiveMenu = styled.div`
 
 
 
+
+
+const radioStyle = {
+  display: 'inline-block',
+  height: '30px',
+  width: '30px',
+  padding: '2px',
+  textAlign: 'center',
+  fontWeight: 'bold'
+};
+
+const radioGroupStyle = {
+  margin: '0 0 0 2em'
+};
+
+
 const Nav = (props) => {
 
   const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const imageViewSize = useSelector(state => state.reducers.imageViewSize);
+
+  const onViewChange = e => {
+    dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: e.target.value });
+  };
 
   const navClick = () => {
     setOpen(false);
@@ -72,11 +94,18 @@ const Nav = (props) => {
   return(
     <ResponsiveMenu open={open}>
       <MenuOutlined onClick={() => setOpen(!open)} />
-      <ul onClick={navClick}>
-        <NavLink to={`/`} exact>S I F T</NavLink>
-        <NavLink to={`/upload`} exact>upload</NavLink>
-        <NavLink to={`/settings`} exact>settings</NavLink>
-      </ul>
+      <div className="nav">
+        <ul onClick={navClick}>
+          <NavLink to={`/`} exact>S I F T</NavLink>
+          <NavLink to={`/upload`} exact>upload</NavLink>
+          <NavLink to={`/settings`} exact>settings</NavLink>
+        </ul>
+        <Radio.Group style={radioGroupStyle} defaultValue={imageViewSize} size="small" onChange={onViewChange}>
+          <Radio.Button style={radioStyle} value="large">+</Radio.Button>
+          <Radio.Button style={radioStyle} value="compact">-</Radio.Button>
+        </Radio.Group>
+        <Button onClick={navClick}>close</Button>
+      </div>
     </ResponsiveMenu>
   );
 };
