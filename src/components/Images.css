@@ -12,12 +12,12 @@
   }
 }
 
-.Images.compact ul:first-child {
+.Images.small ul:first-child {
   display:flex;
   flex-wrap: wrap;
 }
 
-.Images.compact img {
+.Images.small img {
   max-height:300px;
 }
 
@@ -32,7 +32,7 @@
   min-width:100px;
 }
 
-.Images.compact .Image {
+.Images.small .Image {
   width:200px;
 
   margin:0 3em 3em 0;
