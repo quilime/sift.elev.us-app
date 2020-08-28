@@ -123,7 +123,12 @@ const Image = (props) => {
     <div className="Image">
       <Helmet>
         <meta property="og:title" content="S I F T" />
+        <meta property="og:site_name" content="S I F T" />
+        <meta property="og:description" content="Image" />        
         <meta property="og:image" content={image.src} />
+        <meta property="og:image:secure_url" content={image.src} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`/i/${image.uuid}`} />
       </Helmet>
       <div className={!user ? "nonLoggedInImage" : ""}>
       <a href={`/i/${image.uuid}`}>
