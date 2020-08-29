@@ -16,6 +16,7 @@ const Settings = (props) => {
   const [data, setData] = useState(null);
   const [responseText, setResponseText] = useState();
 
+  
   const fetchData = async () => {
     let response = await fetch(url, {
       credentials: 'include',
@@ -67,10 +68,12 @@ const Settings = (props) => {
     console.log('onFinishFailed');
   }
 
+
   if (!data) return(<Loader />);
 
+
   return (
-    <div style={{ maxWidth: "400px" }}>
+    <div className="SiteContent" style={{ maxWidth: "400px" }}>
       <p>
         Logged in as <strong>{user.email}</strong>
       </p>

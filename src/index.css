@@ -1,17 +1,16 @@
 body {
   margin: 0;
   padding: 0;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-a {
+.SiteContent a, 
+.Image a {
   font-family: 'Work Sans', sans-serif;
   font-weight:normal;
   color:#888 !important;
@@ -24,4 +23,3 @@ a {
 .siteWrapper {
   padding:1em 1em 4em 4.3em;
 }
-

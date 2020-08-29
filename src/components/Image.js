@@ -17,12 +17,12 @@ const md = require('markdown-it')({ html: true, linkify: true })
 const Image = (props) => {
 
   const user = useSelector(state => state.reducers.user);
-
   const [image, setImage] = useState(props.image);
   const [editImage, setEditImage] = useState(false);
   const [showMeta, setShowMeta] = useState(false);
   const [responseText, setResponseText] = useState();
   const [descriptionHTML, setDescriptionHTML] = useState();
+
 
   useEffect(() => {
     if (props.uuid) {
@@ -46,6 +46,7 @@ const Image = (props) => {
     }
   }, [props.uuid]);
 
+
   const parseMarkdown = (text) => {
     if (!text) return '';
     return md.render( text, {
@@ -55,6 +56,7 @@ const Image = (props) => {
       linkify: true,
     });
   }
+
 
   const fileSize = (bytes) => {
     var exp = Math.log(bytes) / Math.log(1024) | 0;
@@ -76,9 +78,11 @@ const Image = (props) => {
     }
   }
 
+
   const onEditImage = () => {
     setEditImage(true);
   }
+
 
   const onSubmit = async (values) => {
     setResponseText("Saving... ");
@@ -121,6 +125,7 @@ const Image = (props) => {
 
   return (
     <div className="Image">
+      
       <Helmet>
         <meta property="og:title" content="S I F T" />
         <meta property="og:site_name" content="S I F T" />
@@ -130,17 +135,21 @@ const Image = (props) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`/i/${image.uuid}`} />
       </Helmet>
+      
       <div className={!user ? "nonLoggedInImage" : ""}>
       <a href={`/i/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
       </a>
       </div>
+      
       {user && (
       <p>
       via <a className="strong" href={`/u/${image.username}`}>{image.username}</a>
       </p>
       )}
+
       {props.edit && (
+
         <div className="edit">
 
           {!editImage && (
@@ -150,9 +159,7 @@ const Image = (props) => {
           )}
 
           {image.uploader === user.uuid && !editImage && (
-            <Button
-              onClick={onEditImage}
-            >
+            <Button onClick={onEditImage}>
             Edit
             </Button>
           )}
@@ -204,7 +211,7 @@ const Image = (props) => {
           </div>
         </div>
         )}
-
+        
     </div>
   );
 };

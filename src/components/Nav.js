@@ -1,14 +1,12 @@
 import React, { } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Tooltip } from 'antd';
 import { 
   SettingOutlined, 
   UploadOutlined, 
-  HeatMapOutlined,
-  PlusOutlined,
-  MinusOutlined
+  HeatMapOutlined
 } from '@ant-design/icons';
 
 
@@ -29,10 +27,13 @@ const Nav = (props) => {
 
   const dispatch = useDispatch();
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
+  const location = useLocation();
 
   const setView = (e, val) => {
     dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: val });
   }
+
+  const loc = location.pathname.substr(0, 2);
 
   return(
     <NavDiv>
@@ -49,13 +50,23 @@ const Nav = (props) => {
         <Button shape="circle" icon={<SettingOutlined />} href="/settings" />
       </Tooltip>
 
-      <Tooltip placement="right" title="Large Images" classname="icon">
-        <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" icon={<PlusOutlined />} onClick={(e) => setView(e, "large") } />
-      </Tooltip>
+      { (loc !== '/i') && (
+      <div>
+  
+        <Tooltip placement="right" title="Large Images" classname="icon">
+          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={(e) => setView(e, "large") } >
+          A
+          </Button>
+        </Tooltip>
 
-      <Tooltip placement="right" title="Small Images" classname="icon">
-        <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" icon={<MinusOutlined />} onClick={(e) => setView(e, "small") } />
-      </Tooltip>
+        <Tooltip placement="right" title="Small Images" classname="icon">
+          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={(e) => setView(e, "small") } >
+          a
+          </Button>
+        </Tooltip>
+
+      </div>
+      )}
 
     </NavDiv>
   );
