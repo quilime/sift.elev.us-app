@@ -28,12 +28,11 @@ const Nav = (props) => {
   const dispatch = useDispatch();
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
   const location = useLocation();
+  const loc = location.pathname.substr(0, 2);
 
   const setView = (e, val) => {
     dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: val });
   }
-
-  const loc = location.pathname.substr(0, 2);
 
   return(
     <NavDiv>
@@ -50,8 +49,8 @@ const Nav = (props) => {
         <Button shape="circle" icon={<SettingOutlined />} href="/settings" />
       </Tooltip>
 
-      { (loc !== '/i') && (
-      <div>
+      
+      <div style={{ visibility : loc === '/i' ? "hidden" : "visible" }}>
   
         <Tooltip placement="right" title="Large Images" classname="icon">
           <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={(e) => setView(e, "large") } >
@@ -66,7 +65,7 @@ const Nav = (props) => {
         </Tooltip>
 
       </div>
-      )}
+      
 
     </NavDiv>
   );
