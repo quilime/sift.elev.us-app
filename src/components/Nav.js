@@ -48,20 +48,15 @@ const Nav = (props) => {
       <Tooltip placement="right" title="Settings" classname="icon">
         <Button shape="circle" icon={<SettingOutlined />} href="/settings" />
       </Tooltip>
-
       
       <div style={{ visibility : loc === '/i' ? "hidden" : "visible" }}>
   
         <Tooltip placement="right" title="Large Images" classname="icon">
-          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={(e) => setView(e, "large") } >
-          A
-          </Button>
+          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={(e) => setView(e, "large") } >A</Button>
         </Tooltip>
-
+        
         <Tooltip placement="right" title="Small Images" classname="icon">
-          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={(e) => setView(e, "small") } >
-          a
-          </Button>
+          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={(e) => setView(e, "small") } >a</Button>
         </Tooltip>
 
       </div>
