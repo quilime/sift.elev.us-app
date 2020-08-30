@@ -1,14 +1,12 @@
 import React, { useState, useEffect }  from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from "react-router-dom";
-import { Switch, Button, Input, Form } from 'antd';
+import { Switch, Button, Input, Form, Typography } from 'antd';
 import { useSelector } from "react-redux";
-import { Helmet } from "react-helmet";
-
 import Loader from './Loader.js';
-
 import './Images.css';
 
+const { Paragraph } = Typography;
 
 const md = require('markdown-it')({ html: true, linkify: true })
           .disable([ 'image' ])
@@ -39,12 +37,12 @@ const Image = (props) => {
           // console.log('image', image);
           image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`
           setImage(image);
-          if (image.description) {
-            setDescriptionHTML(parseMarkdown(image.description));
-          }
         });
     }
-  }, [props.uuid]);
+    if (image) {
+      setDescriptionHTML(parseMarkdown(image.description));
+    }    
+  }, [props.uuid, image]);
 
 
   const parseMarkdown = (text) => {
@@ -126,16 +124,6 @@ const Image = (props) => {
   return (
     <div className="Image">
       
-      <Helmet>
-        <meta property="og:title" content="S I F T" />
-        <meta property="og:site_name" content="S I F T" />
-        <meta property="og:description" content="Image" />        
-        <meta property="og:image" content={image.src} />
-        <meta property="og:image:secure_url" content={image.src} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`/i/${image.uuid}`} />
-      </Helmet>
-      
       <div className={!user ? "nonLoggedInImage" : ""}>
       <a href={`/i/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
@@ -143,13 +131,12 @@ const Image = (props) => {
       </div>
       
       {user && (
-      <p>
-      via <a className="strong" href={`/u/${image.username}`}>{image.username}</a>
-      </p>
+        <p>
+          via <a className="strong" href={`/u/${image.username}`}>{image.username}</a>
+        </p>
       )}
 
-      {props.edit && (
-
+      {props.edit ? (
         <div className="edit">
 
           {!editImage && (
@@ -159,18 +146,11 @@ const Image = (props) => {
           )}
 
           {image.uploader === user.uuid && !editImage && (
-            <Button onClick={onEditImage}>
-            Edit
-            </Button>
+            <Button onClick={onEditImage}>Edit</Button>
           )}
 
           {image.uploader === user.uuid && !editImage && (
-            <Button
-              onClick={onDeleteImage}
-              type="danger"
-            >
-            Delete
-            </Button>
+            <Button onClick={onDeleteImage} type="danger">Delete</Button>
           )}
 
           {image.uploader === user.uuid && editImage && (
@@ -189,10 +169,8 @@ const Image = (props) => {
               </Button> {responseText}
             </Form.Item>
           </Form>
-        )}
-          {/*<Button type="danger" onClick={del}>*/}
-            {/*Delete*/}
-          {/*</Button>*/}
+          )}
+
           <div className="meta">
             meta&nbsp;&nbsp;
             <Switch size="small" onChange={(checked, event) => { setShowMeta(checked) }} />
@@ -210,6 +188,12 @@ const Image = (props) => {
             )}
           </div>
         </div>
+        ) : (
+          <>
+          <Paragraph ellipsis={{ rows: 2, expandable: false }}>
+            { image.description }
+          </Paragraph>
+          </>
         )}
         
     </div>

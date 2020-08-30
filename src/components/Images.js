@@ -17,6 +17,7 @@ const mapData = data => {
       src: `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`,
       name: image.name,
       uuid: image.uuid,
+      description: image.description,
       createdAt: image.createdAt,
       username: image.username
     };
