@@ -126,17 +126,16 @@ const Image = (props) => {
   return (
     <div className="Image">
       
-      <div className={!user ? "nonLoggedInImage" : ""}>
+      <div>
       <a href={`/i/${image.uuid}`}>
         <img alt={image.name} src={image.src} />
       </a>
       </div>
       
-      {user && (
+      {user ? (
         <Mark image={image} />
-      )}
+      ) : (<p><br/></p>) }
 
-      {props.edit && (
         <div className="edit">
 
           {!editImage && (
@@ -145,6 +144,8 @@ const Image = (props) => {
           </div>
           )}
 
+          {props.edit && (
+            <>
           {image.uploader === user.uuid && !editImage && (
             <Button onClick={onEditImage}>Edit</Button>
           )}
@@ -187,8 +188,11 @@ const Image = (props) => {
               </ul>
             )}
           </div>
+
+          </>
+          )}
+
         </div>
-        )}
     </div>
   );
 };

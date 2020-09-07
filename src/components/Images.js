@@ -39,8 +39,6 @@ const Images = (props) => {
 
   useEffect(() => {
 
-    console.log('hit');
-
     const fetchData = async () => {
       let res = await fetch(props.url, {
         credentials: 'include',
