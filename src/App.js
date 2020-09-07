@@ -92,18 +92,18 @@ const App = (props) => {
               reload={true}
             />
           )}/>
-          <Route exact path="/page/:page"  render={(props) => (
+          {/* <Route exact path="/page/:page"  render={(props) => (
             <Images
               url={(process.env.REACT_APP_API + '/images')}
               page={props.match.params.page}
             />
-          )}/>
+          )}/> */}
           <Route exact path="/tags/:tag" render={(props) => (
             <Tags />
           )}/>
           <Route exact path="/u/:username" render={(props) => (
             <Images
-            url={(process.env.REACT_APP_API + '/images/uploadedby/' + props.match.params.username)}
+            url={(process.env.REACT_APP_API + '/images/for/' + props.match.params.username)}
             />
           )}/>
           <Route exact path="/i/:uuid" render={(props) => (

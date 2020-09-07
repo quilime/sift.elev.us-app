@@ -1,6 +1,6 @@
 import React, { useState, useEffect  }  from 'react';
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { Pagination } from 'antd';
 // import { AppstoreOutlined, TableOutlined } from '@ant-design/icons';
 import { List } from 'antd';
@@ -27,14 +27,19 @@ const mapData = data => {
 
 const Images = (props) => {
 
+  const dispatch = useDispatch();
+
   const [data, setData] = useState(null);
-  const [pageNumber, setPageNumber] = useState(props.page);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
+  // const [pageSize, setPageSize] = useState(10);
 
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
+  const pageSize = useSelector(state => state.reducers.pageSize);
 
 
   useEffect(() => {
+
+    console.log('hit');
 
     const fetchData = async () => {
       let res = await fetch(props.url, {
@@ -47,7 +52,8 @@ const Images = (props) => {
       });
       const json = await res.json();
       if (json.length) {
-        setData(mapData(json));
+        let arr = mapData(json);
+        setData(arr);
       }
     }
     fetchData();
@@ -55,9 +61,9 @@ const Images = (props) => {
   }, [props.url]);
 
 
-  const setUrl = (page) => {
-    props.history.push("/page/" + page);
-  };
+  // const setUrl = (page) => {
+  //   props.history.push("/page/" + page);
+  // };
 
 
   if (!data) return(<Loader />);
@@ -73,10 +79,11 @@ const Images = (props) => {
       onChange: (page, pageSize) => {
         window.scrollTo(0, 0);
         setPageNumber(page);
-        setPageSize(pageSize);
-        setUrl(page);
+        // setPageSize(pageSize);
+        // setUrl(page);
+        dispatch({ type: 'SET_PAGESIZE', pageSize: pageSize });
       },
-      showSizeChanger: false,
+      showSizeChanger: true,
       showQuickJumper: false,
       showLessItems: false,
       pageSize: pageSize,

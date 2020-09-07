@@ -57,6 +57,14 @@
   max-width:750px;
 }
 
+.Image .mark {
+  margin-top:1em;
+}
+
+.Image .interaction {
+  margin:0.5em 0;
+}
+
 .nonLoggedInImage {
   position:absolute;
   top:1em;

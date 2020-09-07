@@ -1,12 +1,15 @@
 import React, { useState, useEffect }  from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from "react-router-dom";
-import { Switch, Button, Input, Form, Typography } from 'antd';
+
+import { Switch, Button, Input, Form } from 'antd';
+
 import { useSelector } from "react-redux";
 import Loader from './Loader.js';
+import Mark from './Mark.js';
 import './Images.css';
 
-const { Paragraph } = Typography;
+// const { Paragraph } = Typography;
 
 const md = require('markdown-it')({ html: true, linkify: true })
           .disable([ 'image' ])
@@ -21,9 +24,8 @@ const Image = (props) => {
   const [responseText, setResponseText] = useState();
   const [descriptionHTML, setDescriptionHTML] = useState();
 
-
   useEffect(() => {
-    if (props.uuid) {
+    if (props.uuid) { 
       fetch(process.env.REACT_APP_API + '/images/' + props.uuid, {
           credentials: 'include',
           headers: {
@@ -37,12 +39,12 @@ const Image = (props) => {
           // console.log('image', image);
           image.src = `${process.env.REACT_APP_IMG_HOST}/${image.href}/${image.name}`
           setImage(image);
+          if (image) {
+            setDescriptionHTML(parseMarkdown(image.description));
+          }
         });
     }
-    if (image) {
-      setDescriptionHTML(parseMarkdown(image.description));
-    }    
-  }, [props.uuid, image]);
+  }, [props.uuid]);
 
 
   const parseMarkdown = (text) => {
@@ -55,12 +57,12 @@ const Image = (props) => {
     });
   }
 
-
   const fileSize = (bytes) => {
     var exp = Math.log(bytes) / Math.log(1024) | 0;
     var result = (bytes / Math.pow(1024, exp)).toFixed(2);
     return result + ' ' + (exp === 0 ? 'bytes': 'KMGTPEZY'[exp - 1] + 'B');
   }
+
 
   const onDeleteImage = async () => {
     if (window.confirm("Delete delete? It'll be gone forever.")) {
@@ -131,12 +133,10 @@ const Image = (props) => {
       </div>
       
       {user && (
-        <p>
-          via <a className="strong" href={`/u/${image.username}`}>{image.username}</a>
-        </p>
+        <Mark image={image} />
       )}
 
-      {props.edit ? (
+      {props.edit && (
         <div className="edit">
 
           {!editImage && (
@@ -188,16 +188,19 @@ const Image = (props) => {
             )}
           </div>
         </div>
-        ) : (
-          <>
-          <Paragraph ellipsis={{ rows: 2, expandable: false }}>
-            { image.description }
-          </Paragraph>
-          </>
         )}
-        
     </div>
   );
 };
+
+        // : (
+        //   { /* }
+        //   <>
+        //   <Paragraph ellipsis={{ rows: 2, expandable: false }}>
+        //     { image.description }
+        //   </Paragraph>
+        //   </>
+        //   { */ }
+        // )}
 
 export default withRouter(Image);

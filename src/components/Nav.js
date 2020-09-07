@@ -6,7 +6,8 @@ import { Button, Tooltip } from 'antd';
 import { 
   SettingOutlined, 
   UploadOutlined, 
-  HeatMapOutlined
+  HeatMapOutlined,
+  EyeOutlined
 } from '@ant-design/icons';
 
 
@@ -27,10 +28,11 @@ const Nav = (props) => {
 
   const dispatch = useDispatch();
   const imageViewSize = useSelector(state => state.reducers.imageViewSize);
+  const user = useSelector(state => state.reducers.user);
   const location = useLocation();
   const loc = location.pathname.substr(0, 2);
 
-  const setView = (e, val) => {
+  const setView = (val) => {
     dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: val });
   }
 
@@ -48,15 +50,19 @@ const Nav = (props) => {
       <Tooltip placement="right" title="Settings" classname="icon">
         <Button shape="circle" icon={<SettingOutlined />} href="/settings" />
       </Tooltip>
+
+      <Tooltip placement="right" title="Seen" classname="icon">
+        <Button shape="circle" icon={<EyeOutlined />} href={"/u/" + user.username } />
+      </Tooltip>      
       
       <div style={{ visibility : loc === '/i' ? "hidden" : "visible" }}>
   
         <Tooltip placement="right" title="Large Images" classname="icon">
-          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={(e) => setView(e, "large") } >A</Button>
+          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={() => setView("large") } >A</Button>
         </Tooltip>
         
         <Tooltip placement="right" title="Small Images" classname="icon">
-          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={(e) => setView(e, "small") } >a</Button>
+          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={() => setView("small") } >a</Button>
         </Tooltip>
 
       </div>

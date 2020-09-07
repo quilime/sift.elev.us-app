@@ -4,7 +4,8 @@ import { connectRouter } from "connected-react-router";
 // import store_config from "../assets/store_config";
 
 const initialState = {
-  imageViewSize: "large"
+  imageViewSize: "large",
+  pageSize: 10
 }
 
 const reducers = function calls(state = { ...initialState }, action) {
@@ -12,6 +13,8 @@ const reducers = function calls(state = { ...initialState }, action) {
   switch (action.type) {
     case "SET_IMAGEVIEWSIZE":
       return { ...state, imageViewSize: action.imageViewSize };
+      case "SET_PAGESIZE":
+        return { ...state, pageSize: action.pageSize };      
     case "SET_LOGGED_IN":
       return { ...state, loggedIn: action.loggedIn };
     case "SET_USER":
