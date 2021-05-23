@@ -58,12 +58,21 @@ const App = (props) => {
     return (
       <BrowserRouter>
         <div className="siteWrapper">
+          <Nav />
           <Switch>
             <Route exact path="/" render={(props) => (
-              <Register />
+              <Images
+                url={(process.env.REACT_APP_API + '/images')}
+                page={1}
+                key={Math.random()}
+                reload={true}
+              />
             )}/>
-            <Route exact path="/login" render={(props) => (
+            <Route exact path="/register" render={(props) => (
               <Login />
+            )} />
+            <Route exact path="/login" render={(props) => (
+              <Register />
             )} />
             <Route exact path="/i/:uuid" render={(props) => (
               <Image

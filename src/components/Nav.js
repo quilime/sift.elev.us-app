@@ -7,7 +7,8 @@ import {
   SettingOutlined, 
   UploadOutlined, 
   HeatMapOutlined,
-  EyeOutlined
+  EyeOutlined,
+  LoginOutlined
 } from '@ant-design/icons';
 
 
@@ -36,6 +37,33 @@ const Nav = (props) => {
     dispatch({ type: 'SET_IMAGEVIEWSIZE', imageViewSize: val });
   }
 
+  if (!user) {
+    return(
+    <NavDiv>
+
+      <Tooltip placement="right" title="S I F T" className="icon">
+        <Button shape="circle" icon={<HeatMapOutlined />} href="/" />
+      </Tooltip>
+
+      <Tooltip placement="right" title="Login" classname="icon">
+        <Button shape="circle" icon={<LoginOutlined />} href="/login" />
+      </Tooltip>
+
+      <div style={{ visibility : loc === '/i' ? "hidden" : "visible" }}>
+
+        <Tooltip placement="right" title="Large Images" classname="icon">
+          <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={() => setView("large") } >A</Button>
+        </Tooltip>
+
+        <Tooltip placement="right" title="Small Images" classname="icon">
+          <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={() => setView("small") } >a</Button>
+        </Tooltip>
+
+      </div>
+
+    </NavDiv>      )
+  }
+
   return(
     <NavDiv>
 
@@ -53,20 +81,19 @@ const Nav = (props) => {
 
       <Tooltip placement="right" title="Seen" classname="icon">
         <Button shape="circle" icon={<EyeOutlined />} href={"/u/" + user.username } />
-      </Tooltip>      
-      
+      </Tooltip>
+
       <div style={{ visibility : loc === '/i' ? "hidden" : "visible" }}>
-  
+
         <Tooltip placement="right" title="Large Images" classname="icon">
           <Button disabled={ imageViewSize === "small" ? false : true } shape="circle" onClick={() => setView("large") } >A</Button>
         </Tooltip>
-        
+
         <Tooltip placement="right" title="Small Images" classname="icon">
           <Button disabled={ imageViewSize === "small" ? true : false } shape="circle" onClick={() => setView("small") } >a</Button>
         </Tooltip>
 
       </div>
-      
 
     </NavDiv>
   );
